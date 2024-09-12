@@ -2,6 +2,7 @@ import Accordion from "../components/Accordion";
 import ClientHeader from "../components/ClientHeader";
 import LetterFilter from "../components/LetterFilter";
 import NavBar from "../components/NavBar";
+import StandardFooter from "../components/StandardFooter";
 
 const TestPage = () => {
   return (
@@ -110,25 +111,7 @@ const TestPage = () => {
             </div>
           </section>
         </div>
-        <footer className="footer">
-          <div className="wrapper">
-            <ul>
-              <li>
-                <span>Copyright. VegaITSourcing All rights reserved</span>
-              </li>
-            </ul>
-            <ul className="right">
-              <li>
-                <a href="javascript:;">Terms of service</a>
-              </li>
-              <li>
-                <a href="javascript:;" className="last">
-                  Privacy policy
-                </a>
-              </li>
-            </ul>
-          </div>
-        </footer>
+        <StandardFooter></StandardFooter>
       </div>
     </>
   );
