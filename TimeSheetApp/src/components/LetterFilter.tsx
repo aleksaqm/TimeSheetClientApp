@@ -33,7 +33,8 @@ const LetterFilter = () => {
   const [selectedLetter, setSelectedLetter] = useState("");
 
   const letterClicked = (event: any) => {
-    setSelectedLetter(event.target.value);
+    setSelectedLetter(event.target.text);
+    console.log(selectedLetter);
   };
 
   return (
@@ -41,7 +42,8 @@ const LetterFilter = () => {
       <div className="alpha">
         <ul>
           {letters.map((letter) => (
-            <li>
+            //if selectedLetter == letter => give li element className = 'active'
+            <li className={selectedLetter == letter ? "active" : ""}>
               <a onClick={letterClicked}>{letter}</a>
             </li>
           ))}

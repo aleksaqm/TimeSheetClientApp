@@ -3,8 +3,16 @@ import ClientHeader from "../components/ClientHeader";
 import LetterFilter from "../components/LetterFilter";
 import NavBar from "../components/NavBar";
 import StandardFooter from "../components/StandardFooter";
+import UserSettings from "../components/UserSettings";
+import useFetch from "../hooks/useFetch";
 
 const TestPage = () => {
+  const {
+    data: clients,
+    isLoading,
+    error,
+  } = useFetch("https://localhost:7138/api/Client");
+
   return (
     <>
       <div className="container">
@@ -12,36 +20,9 @@ const TestPage = () => {
           <div className="top-bar"></div>
           <div className="wrapper">
             <a href="/" className="logo">
-              <img src="../../public/logo.png" alt="VegaITSourcing Timesheet" />
+              <img src="/logo.png" alt="VegaITSourcing Timesheet" />
             </a>
-            <ul className="user right">
-              <li>
-                <a>Sladjana Miljanovic</a>
-                <div className="invisible"></div>
-                <div className="user-menu">
-                  <ul>
-                    <li>
-                      <a href="javascript:;" className="link">
-                        Change password
-                      </a>
-                    </li>
-                    <li>
-                      <a href="javascript:;" className="link">
-                        Settings
-                      </a>
-                    </li>
-                    <li>
-                      <a href="javascript:;" className="link">
-                        Export all data
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li className="last">
-                <a href="javascript:;">Logout</a>
-              </li>
-            </ul>
+            <UserSettings name="Aleksa Perovic"></UserSettings>
             <NavBar active="Clients"></NavBar>
           </div>
         </header>
@@ -89,9 +70,12 @@ const TestPage = () => {
             </div>
             <LetterFilter></LetterFilter>
             <div className="accordion-wrap clients">
-              <Accordion title="First Client"></Accordion>
-              <Accordion title="Second Client"></Accordion>
-              <Accordion title="Third Client"></Accordion>
+              {isLoading && <div>Loading clients</div>}
+              {error && <div>{error}</div>}
+              {clients &&
+                clients.map((client: any) => (
+                  <Accordion title={client.name}></Accordion>
+                ))}
             </div>
             <div className="pagination">
               <ul>
