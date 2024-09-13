@@ -1,12 +1,19 @@
+import Popup from "reactjs-popup";
 import TextInput from "./TextInput";
+import NewClientPopup from "./NewClientPopup";
 
 const ClientHeader = () => {
   return (
     <>
       <div className="grey-box-wrap reports">
-        <a href="#new-member" className="link new-member-popup">
-          Create new client
-        </a>
+        <Popup
+          trigger={<a className="link new-member-popup">Create new client</a>}
+          position={"right center"}
+          modal
+          nested
+        >
+          <NewClientPopup></NewClientPopup>
+        </Popup>
         <div className="search-page">
           <TextInput
             value=""
