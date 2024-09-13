@@ -28,7 +28,7 @@ const LetterFilter = () => {
     "x",
     "y",
     "z",
-  ];
+  ] as const;
 
   const [selectedLetter, setSelectedLetter] = useState("");
 
@@ -41,9 +41,12 @@ const LetterFilter = () => {
     <>
       <div className="alpha">
         <ul>
-          {letters.map((letter) => (
+          {letters.map((letter, index) => (
             //if selectedLetter == letter => give li element className = 'active'
-            <li className={selectedLetter == letter ? "active" : ""}>
+            <li
+              key={index}
+              className={selectedLetter === letter ? "active" : ""}
+            >
               <a onClick={letterClicked}>{letter}</a>
             </li>
           ))}

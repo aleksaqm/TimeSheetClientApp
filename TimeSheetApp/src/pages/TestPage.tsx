@@ -1,17 +1,22 @@
+import { useEffect } from "react";
 import Accordion from "../components/Accordion";
 import ClientHeader from "../components/ClientHeader";
 import LetterFilter from "../components/LetterFilter";
 import NavBar from "../components/NavBar";
+import Pagination from "../components/Pagination";
 import StandardFooter from "../components/StandardFooter";
 import UserSettings from "../components/UserSettings";
 import useFetch from "../hooks/useFetch";
+import ClientType from "../types/ClientType";
 
 const TestPage = () => {
+  useEffect(() => {});
   const {
     data: clients,
     isLoading,
     error,
-  } = useFetch("https://localhost:7138/api/Client");
+    paginationInfo,
+  } = useFetch<ClientType>("https://localhost:7138/api/Client");
 
   return (
     <>
@@ -73,26 +78,11 @@ const TestPage = () => {
               {isLoading && <div>Loading clients</div>}
               {error && <div>{error}</div>}
               {clients &&
-                clients.map((client: any) => (
-                  <Accordion title={client.name}></Accordion>
+                clients?.map((client: any) => (
+                  <Accordion object={client}></Accordion>
                 ))}
             </div>
-            <div className="pagination">
-              <ul>
-                <li>
-                  <a href="javascript:;">1</a>
-                </li>
-                <li>
-                  <a href="javascript:;">2</a>
-                </li>
-                <li>
-                  <a href="javascript:;">3</a>
-                </li>
-                <li className="last">
-                  <a href="javascript:;">Next</a>
-                </li>
-              </ul>
-            </div>
+            <Pagination paginationInfo={paginationInfo}></Pagination>
           </section>
         </div>
         <StandardFooter></StandardFooter>

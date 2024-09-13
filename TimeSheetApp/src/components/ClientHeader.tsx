@@ -9,10 +9,12 @@ const ClientHeader = () => {
         </a>
         <div className="search-page">
           <TextInput
+            value=""
             type="search"
             name="search-clients"
             className="in-search"
             labelText=""
+            handleChange={(value) => console.log(value)}
           ></TextInput>
         </div>
       </div>

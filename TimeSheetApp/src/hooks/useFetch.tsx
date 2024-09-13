@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-
-const useFetch = (url: any) => {
-  const [data, setData] = useState(null);
+//generic usefect type
+const useFetch = <T,>(url: any) => {
+  const [data, setData] = useState<T[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [paginationInfo, setPaginationInfo] = useState(null);
 
   useEffect(() => {
     fetch(url, {
@@ -14,8 +15,17 @@ const useFetch = (url: any) => {
           // error coming back from server
           throw Error("could not fetch the data for that resource");
         }
+        try {
+          const paginationHeader = response.headers.get("pagination");
+          const parsedPagination = paginationHeader
+            ? JSON.parse(paginationHeader)
+            : null;
+          setPaginationInfo(parsedPagination);
+        } catch {}
+
         return response.json();
       })
+
       .then((data) => {
         setIsLoading(false);
         setData(data);
@@ -27,7 +37,7 @@ const useFetch = (url: any) => {
       });
   }, [url]);
 
-  return { data, isLoading, error };
+  return { data, isLoading, error, paginationInfo };
 };
 
 export default useFetch;

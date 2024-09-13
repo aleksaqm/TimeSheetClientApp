@@ -5,10 +5,19 @@ interface Props {
   className: string;
   type: string;
   name: string;
+  value: string;
+  handleChange: (newValue: string) => void;
 }
 
-const TextInput = ({ labelText = "", className, type, name }: Props) => {
-  const [text, setText] = useState("");
+const TextInput = ({
+  labelText = "",
+  className,
+  type,
+  name,
+  value,
+  handleChange,
+}: Props) => {
+  const [text, setText] = useState(value);
 
   return (
     <>
@@ -18,7 +27,10 @@ const TextInput = ({ labelText = "", className, type, name }: Props) => {
         name={name}
         type={type}
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => {
+          setText(e.target.value);
+          handleChange(e.target.value);
+        }}
       />
     </>
   );

@@ -1,4 +1,3 @@
-import Accordion from "../components/Accordion";
 import DropDownList from "../components/DropDownList";
 import TextInput from "../components/TextInput";
 
@@ -17,14 +16,19 @@ const ClientsPage = () => {
           type="text"
           name=""
           className="in-text"
+          handleChange={(value) => console.log(value)}
           labelText={"Name: "}
+          value={""}
         ></TextInput>
-        <DropDownList labelText="some text" options={options}></DropDownList>
+        <DropDownList
+          handleChange={(value) => console.log(value)}
+          labelText="some text"
+          options={options}
+          selected={""}
+        ></DropDownList>
       </div>
       <br />
-      <div>
-        <Accordion title="Some client"></Accordion>
-      </div>
+      <div>{/* <Accordion title="Some client"></Accordion> */}</div>
     </>
   );
 };
