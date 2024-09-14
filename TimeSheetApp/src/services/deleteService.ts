@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const deleteRequest = (url : string, id : any) => {
+const deleteRequest = (url : string, id : any, fetchClients: () => Promise<void>) => {
     fetch(`${url}/${id}`, {
         method: "DELETE",
       })
@@ -13,6 +13,7 @@ const deleteRequest = (url : string, id : any) => {
             else{
                 console.log("uspeo")
                 toast.success("Successfully deleted");
+                fetchClients()
             }
         })
         // catch blok

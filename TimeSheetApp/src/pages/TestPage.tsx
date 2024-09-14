@@ -5,52 +5,61 @@ import NavBar from "../components/NavBar";
 import Pagination from "../components/Pagination";
 import StandardFooter from "../components/StandardFooter";
 import UserSettings from "../components/UserSettings";
-import useFetch from "../hooks/useFetch";
-import ClientType from "../types/ClientType";
+import { ClientProvider, useClients } from "../hooks/useClients";
+// import useFetch from "../hooks/useFetch";
+// import ClientType from "../types/ClientType";
 
 const TestPage = () => {
-  const {
-    data: clients,
-    isLoading,
-    error,
-    paginationInfo,
-  } = useFetch<ClientType>("https://localhost:7138/api/Client");
+  // const {
+  //   data: clients,
+  //   isLoading,
+  //   error,
+  //   paginationInfo,
+  // } = useFetch<ClientType>("https://localhost:7138/api/Client");
 
   return (
     <>
-      <div className="container">
-        <header className="header">
-          <div className="top-bar"></div>
-          <div className="wrapper">
-            <a href="/" className="logo">
-              <img src="/logo.png" alt="VegaITSourcing Timesheet" />
-            </a>
-            <UserSettings name="Aleksa Perovic"></UserSettings>
-            <NavBar active="Clients"></NavBar>
-          </div>
-        </header>
-        <div className="wrapper">
-          <section className="content">
-            <h2>
-              <i className="ico clients"></i>Clients
-            </h2>
-            <ClientHeader></ClientHeader>
-
-            <LetterFilter></LetterFilter>
-            <div className="accordion-wrap clients">
-              {isLoading && <div>Loading clients</div>}
-              {error && <div>{error}</div>}
-              {clients &&
-                clients?.map((client: any) => (
-                  <Accordion object={client}></Accordion>
-                ))}
+      <ClientProvider>
+        <div className="container">
+          <header className="header">
+            <div className="top-bar"></div>
+            <div className="wrapper">
+              <a href="/" className="logo">
+                <img src="/logo.png" alt="VegaITSourcing Timesheet" />
+              </a>
+              <UserSettings name="Aleksa Perovic"></UserSettings>
+              <NavBar active="Clients"></NavBar>
             </div>
-            <Pagination paginationInfo={paginationInfo}></Pagination>
-          </section>
+          </header>
+          <ClientSection></ClientSection>
+          <StandardFooter></StandardFooter>
         </div>
-        <StandardFooter></StandardFooter>
-      </div>
+      </ClientProvider>
     </>
+  );
+};
+
+const ClientSection = () => {
+  const { clients, isLoading, error, paginationInfo } = useClients();
+
+  return (
+    <div className="wrapper">
+      <section className="content">
+        <h2>
+          <i className="ico clients"></i>Clients
+        </h2>
+        <ClientHeader />
+        <LetterFilter />
+        <div className="accordion-wrap clients">
+          {isLoading && <div>Loading clients</div>}
+          {error && <div>{error}</div>}
+          {clients?.map((client) => (
+            <Accordion key={client.id} object={client} />
+          ))}
+        </div>
+        <Pagination paginationInfo={paginationInfo} />
+      </section>
+    </div>
   );
 };
 

@@ -4,6 +4,7 @@ import DropDownList from "./DropDownList";
 import TextInput from "./TextInput";
 import updateRequest from "../services/updateService";
 import { useState } from "react";
+import { useClients } from "../hooks/useClients";
 
 interface Props {
   client: {
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const ClientDetails = ({ client }: Props) => {
+  const { fetchClients } = useClients();
   const [name, setName] = useState(client.name);
   const [address, setAddress] = useState(client.address);
   const [city, setCity] = useState(client.city);
@@ -24,7 +26,7 @@ const ClientDetails = ({ client }: Props) => {
   const [postalCode, setPostalCode] = useState(client.postalCode);
 
   const deleteClient = () => {
-    deleteRequest("https://localhost:7138/api/Client", client.id); //.then(()=>
+    deleteRequest("https://localhost:7138/api/Client", client.id, fetchClients); //.then(()=>
     // getClients())
   };
 
