@@ -10,11 +10,12 @@
 //------------------------------------------------------------------------------
 
 .new-member-wrap {
-	display: none;
+	// display: none;
 }
 .new-member-inner {
 	width: 450px;
 	overflow: auto;
+	background-color: rgb(218, 218, 218);
 	.form {
 		border-bottom: 1px solid $grey-light;
 		padding-bottom: 15px;

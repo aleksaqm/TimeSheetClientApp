@@ -4,13 +4,15 @@ interface Props {
   className: string;
 }
 
+//link stavi umesto li ovde dole
+
 const NavMenu = ({ items, active, className }: Props) => {
   return (
     <>
       <ul className="menu">
-        {items.map(({ name, path }) => (
-          <li>
-            {name == active ? (
+        {items.map(({ name, path }, index) => (
+          <li key={index}>
+            {name === active ? (
               <a href={path} className={className + " active"}>
                 {name}
               </a>
