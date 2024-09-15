@@ -6,7 +6,7 @@ interface Props {
 
 const NavBar = ({ active }: Props) => {
   const items = [
-    { name: "TimeSheet", path: "/" },
+    { name: "TimeSheet", path: "/timesheet" },
     { name: "Clients", path: "/clients" },
     { name: "Projects", path: "/" },
     { name: "Categories", path: "/" },

@@ -12,7 +12,7 @@ const NavMenu = ({ items, active, className }: Props) => {
       <ul className="menu">
         {items.map(({ name, path }, index) => (
           <li key={index}>
-            {name === active ? (
+            {name.toLowerCase() === active.toLowerCase() ? (
               <a href={path} className={className + " active"}>
                 {name}
               </a>

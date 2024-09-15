@@ -6,3 +6,5 @@ then =>
 kod delete i update => catch i loading 
 
 env variable using vite
+
+refaktorisati mozda heder od kalendara

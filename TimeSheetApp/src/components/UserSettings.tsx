@@ -10,17 +10,8 @@ const UserSettings = ({ name }: Props) => {
   return (
     <>
       <ul className="user right">
-        <li
-          onClick={() => setIsActive(!isActive)}
-          //   onMouseLeave={() => setIsActive(false)}
-        >
-          <a
-          // onMouseOver={() => setIsActive(true)}
-          // onMouseOut={() => setIsActive(false)}
-          // onClick={() => setIsActive(true)}
-          >
-            {name}
-          </a>
+        <li onClick={() => setIsActive(!isActive)}>
+          <a>{name}</a>
           <div className="invisible"></div>
           {isActive && (
             <div className="user-menu">
