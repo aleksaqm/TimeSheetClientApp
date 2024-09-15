@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 interface Props {
   date: Date;
   hours: number;
@@ -22,9 +24,9 @@ const CalendarDay = ({ date, hours }: Props) => {
           <span>{date.getDate()}.</span>
         </div>
         <div className="hours">
-          <a href="/activities">
+          <Link to="/activities" state={{ date }}>
             Hours: <span>{hours}</span>
-          </a>
+          </Link>
         </div>
       </td>
     </>

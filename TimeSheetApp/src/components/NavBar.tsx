@@ -8,8 +8,8 @@ const NavBar = ({ active }: Props) => {
   const items = [
     { name: "TimeSheet", path: "/timesheet" },
     { name: "Clients", path: "/clients" },
-    { name: "Projects", path: "/" },
-    { name: "Categories", path: "/" },
+    { name: "Projects", path: "/projects" },
+    { name: "Categories", path: "/categories" },
     { name: "Team Members", path: "/" },
     { name: "Reports", path: "/" },
   ];
