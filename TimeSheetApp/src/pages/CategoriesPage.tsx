@@ -1,9 +1,7 @@
-import LetterFilter from "../components/LetterFilter";
 import NavBar from "../components/NavBar";
-import Pagination from "../components/Pagination";
 import StandardFooter from "../components/StandardFooter";
 import UserSettings from "../components/UserSettings";
-import { DataProvider, useData } from "../hooks/DataContext";
+import { DataProvider } from "../hooks/DataContext";
 import CategoryType from "../types/CategoryType";
 
 const CategoriesPage = () => {
