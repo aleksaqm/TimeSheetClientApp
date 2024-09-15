@@ -3,8 +3,11 @@ import TextInput from "./TextInput";
 import DropDownList from "./DropDownList";
 import createRequest from "../services/createService";
 import { ToastContainer } from "react-toastify";
+import { useData } from "../hooks/DataContext";
+import ClientType from "../types/ClientType";
 
 const NewClientPopup = () => {
+  const { fetchData } = useData<ClientType>();
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -12,20 +15,14 @@ const NewClientPopup = () => {
   const [postalCode, setPostalCode] = useState("");
 
   const addClient = () => {
-    var maric = {
-      name: name,
-      address: address,
-      city: city,
-      country: country,
-      postalCode: postalCode,
-    };
-    console.log(maric);
     createRequest("https://localhost:7138/api/Client", {
       name: name,
       address: address,
       city: city,
       country: country,
       postalCode: postalCode,
+    }).then(() => {
+      fetchData();
     });
   };
 

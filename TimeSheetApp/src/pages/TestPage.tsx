@@ -5,21 +5,13 @@ import NavBar from "../components/NavBar";
 import Pagination from "../components/Pagination";
 import StandardFooter from "../components/StandardFooter";
 import UserSettings from "../components/UserSettings";
-import { ClientProvider, useClients } from "../hooks/useClients";
-// import useFetch from "../hooks/useFetch";
-// import ClientType from "../types/ClientType";
+import { DataProvider, useData } from "../hooks/DataContext";
+import ClientType from "../types/ClientType";
 
 const TestPage = () => {
-  // const {
-  //   data: clients,
-  //   isLoading,
-  //   error,
-  //   paginationInfo,
-  // } = useFetch<ClientType>("https://localhost:7138/api/Client");
-
   return (
     <>
-      <ClientProvider>
+      <DataProvider<ClientType> url="https://localhost:7138/api/Client">
         <div className="container">
           <header className="header">
             <div className="top-bar"></div>
@@ -34,13 +26,13 @@ const TestPage = () => {
           <ClientSection></ClientSection>
           <StandardFooter></StandardFooter>
         </div>
-      </ClientProvider>
+      </DataProvider>
     </>
   );
 };
 
 const ClientSection = () => {
-  const { clients, isLoading, error, paginationInfo } = useClients();
+  const { data, isLoading, error, paginationInfo } = useData<ClientType>();
 
   return (
     <div className="wrapper">
@@ -53,11 +45,13 @@ const ClientSection = () => {
         <div className="accordion-wrap clients">
           {isLoading && <div>Loading clients</div>}
           {error && <div>{error}</div>}
-          {clients?.map((client) => (
+          {data?.map((client) => (
             <Accordion key={client.id} object={client} />
           ))}
         </div>
-        <Pagination paginationInfo={paginationInfo} />
+        {paginationInfo !== undefined && (
+          <Pagination paginationData={paginationInfo} />
+        )}
       </section>
     </div>
   );

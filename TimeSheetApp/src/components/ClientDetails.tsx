@@ -4,11 +4,13 @@ import DropDownList from "./DropDownList";
 import TextInput from "./TextInput";
 import updateRequest from "../services/updateService";
 import { useState } from "react";
-import { useClients } from "../hooks/useClients";
+import { UUID } from "crypto";
+import ClientType from "../types/ClientType";
+import { useData } from "../hooks/DataContext";
 
 interface Props {
   client: {
-    id: any;
+    id: UUID;
     name: string;
     address: string;
     city: string;
@@ -18,7 +20,7 @@ interface Props {
 }
 
 const ClientDetails = ({ client }: Props) => {
-  const { fetchClients } = useClients();
+  const { fetchData } = useData<ClientType>();
   const [name, setName] = useState(client.name);
   const [address, setAddress] = useState(client.address);
   const [city, setCity] = useState(client.city);
@@ -26,8 +28,13 @@ const ClientDetails = ({ client }: Props) => {
   const [postalCode, setPostalCode] = useState(client.postalCode);
 
   const deleteClient = () => {
-    deleteRequest("https://localhost:7138/api/Client", client.id, fetchClients); //.then(()=>
-    // getClients())
+    deleteRequest("https://localhost:7138/api/Client", client.id)
+      .then(() => {
+        fetchData(); // Fetch clients after deletion is successful
+      })
+      .catch((err) => {
+        console.error("Error during deletion:", err);
+      });
   };
 
   const updateClient = () => {
@@ -39,7 +46,13 @@ const ClientDetails = ({ client }: Props) => {
       city: city,
       postalCode: postalCode,
       country: country,
-    });
+    })
+      .then(() => {
+        fetchData();
+      })
+      .catch((err) => {
+        console.error("Error during update:", err);
+      });
   };
 
   return (

@@ -1,24 +1,68 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import PaginationType from "../types/PaginationType";
+import ClientType from "../types/ClientType";
+import { useData } from "../hooks/DataContext";
 
-const Pagination = (paginationInfo: any) => {
-  const [page, setPage] = useState(paginationInfo.currentPage);
-  console.log(paginationInfo);
+interface Props {
+  paginationData: PaginationType;
+}
+
+const Pagination = ({ paginationData }: Props) => {
+  const [page, setPage] = useState(paginationData.CurrentPage);
+
+  const { fetchData, setQueryParams, queryParams, paginationInfo } =
+    useData<ClientType>();
+
+  const nextPage = () => {
+    setQueryParams((prevParams) => ({
+      ...prevParams,
+      pageNumber: page + 1,
+    }));
+    setPage(page + 1);
+  };
+
+  const previousPage = () => {
+    setQueryParams((prevParams) => ({
+      ...prevParams,
+      pageNumber: page - 1,
+    }));
+    setPage(page - 1);
+  };
+
+  useEffect(() => {
+    fetchData().then(() => {
+      if (paginationInfo) {
+        setPage(paginationInfo.CurrentPage);
+      }
+    });
+  }, [page, queryParams]);
+
   return (
     <>
       <div className="pagination">
         <ul>
-          {paginationInfo.hasPrevious && (
-            <li onClick={() => setPage(page - 1)}>
-              <a>{page}-1</a>
-            </li>
+          {paginationData.HasPrevious && (
+            <>
+              <li onClick={previousPage}>
+                <a>Previous</a>
+              </li>
+              <li onClick={previousPage}>
+                <a>{page - 1}</a>
+              </li>
+            </>
           )}
           <li>
-            <a>{page}</a>
+            <a style={{ fontWeight: "bold" }}>{page}</a>
           </li>
-          {paginationInfo.hasNext && (
-            <li onClick={() => setPage(page + 1)}>
-              <a>{page} + 1</a>
-            </li>
+          {paginationData.HasNext && (
+            <>
+              <li onClick={nextPage}>
+                <a>{page + 1}</a>
+              </li>
+              <li onClick={nextPage}>
+                <a>Next</a>
+              </li>
+            </>
           )}
         </ul>
       </div>
