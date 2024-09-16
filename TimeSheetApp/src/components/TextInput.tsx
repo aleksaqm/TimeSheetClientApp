@@ -6,6 +6,7 @@ interface Props {
   type: string;
   name: string;
   value: string | number;
+  checked?: boolean;
   handleChange: (newValue: string) => void;
 }
 
@@ -16,6 +17,7 @@ const TextInput = ({
   name,
   value,
   handleChange,
+  checked = false,
 }: Props) => {
   const [text, setText] = useState(value);
 
@@ -27,6 +29,7 @@ const TextInput = ({
         name={name}
         type={type}
         value={text}
+        checked={checked}
         onChange={(e) => {
           setText(e.target.value);
           handleChange(e.target.value);
