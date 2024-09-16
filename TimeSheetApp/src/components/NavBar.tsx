@@ -10,7 +10,7 @@ const NavBar = ({ active }: Props) => {
     { name: "Clients", path: "/clients" },
     { name: "Projects", path: "/projects" },
     { name: "Categories", path: "/categories" },
-    { name: "Team Members", path: "/" },
+    { name: "Team Members", path: "/teamMembers" },
     { name: "Reports", path: "/" },
   ];
   return (

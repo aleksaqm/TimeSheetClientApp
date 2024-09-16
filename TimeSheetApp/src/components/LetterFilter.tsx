@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
-import ClientType from "../types/ClientType";
 import { useData } from "../hooks/DataContext";
 
-const LetterFilter = () => {
+interface Props<T> {
+  useDataHook: () => ReturnType<typeof useData<T>>;
+}
+
+const LetterFilter = <T extends unknown>({ useDataHook }: Props<T>) => {
   const letters = [
     "a",
     "b",
@@ -35,7 +38,7 @@ const LetterFilter = () => {
 
   const [selectedLetter, setSelectedLetter] = useState("");
 
-  const { fetchData, setQueryParams, queryParams } = useData<ClientType>();
+  const { fetchData, setQueryParams, queryParams } = useDataHook();
 
   useEffect(() => {
     fetchData();

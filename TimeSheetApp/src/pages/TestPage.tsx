@@ -1,7 +1,9 @@
 import Accordion from "../components/Accordion";
-import ClientHeader from "../components/ClientHeader";
+import ClientDetails from "../components/ClientDetails";
+import DataHeader from "../components/DataHeader";
 import LetterFilter from "../components/LetterFilter";
 import NavBar from "../components/NavBar";
+import NewClientPopup from "../components/NewClientPopup";
 import Pagination from "../components/Pagination";
 import StandardFooter from "../components/StandardFooter";
 import UserSettings from "../components/UserSettings";
@@ -40,17 +42,27 @@ const ClientSection = () => {
         <h2>
           <i className="ico clients"></i>Clients
         </h2>
-        <ClientHeader />
-        <LetterFilter />
+        <DataHeader
+          useDataHook={useData<ClientType>}
+          createPopup={<NewClientPopup />}
+        />
+        <LetterFilter useDataHook={useData<ClientType>} />
         <div className="accordion-wrap clients">
           {isLoading && <div>Loading clients</div>}
           {error && <div>{error}</div>}
           {data?.map((client) => (
-            <Accordion key={client.id} object={client} />
+            <Accordion
+              key={client.id}
+              object={client}
+              DetailsComponent={ClientDetails}
+            />
           ))}
         </div>
         {paginationInfo !== undefined && (
-          <Pagination paginationData={paginationInfo} />
+          <Pagination
+            paginationData={paginationInfo}
+            useDataHook={useData<ClientType>}
+          />
         )}
       </section>
     </div>

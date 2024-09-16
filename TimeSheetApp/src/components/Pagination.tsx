@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import PaginationType from "../types/PaginationType";
-import ClientType from "../types/ClientType";
 import { useData } from "../hooks/DataContext";
 
-interface Props {
+interface Props<T> {
+  useDataHook: () => ReturnType<typeof useData<T>>;
   paginationData: PaginationType;
 }
 
-const Pagination = ({ paginationData }: Props) => {
+const Pagination = <T extends unknown>({
+  useDataHook,
+  paginationData,
+}: Props<T>) => {
   const [page, setPage] = useState(paginationData.CurrentPage);
 
   const { fetchData, setQueryParams, queryParams, paginationInfo } =
-    useData<ClientType>();
+    useDataHook();
 
   const nextPage = () => {
     setQueryParams((prevParams) => ({

@@ -6,6 +6,7 @@ import TimeSheetPage from "./pages/TimeSheetPage";
 import ActivitiesPage from "./pages/ActivitiesPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import CategoriesPage from "./pages/CategoriesPage";
+import TeamMembersPage from "./pages/TeamMembersPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/activities" element={<ActivitiesPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/categories" element={<CategoriesPage />} />
+        <Route path="/teamMembers" element={<TeamMembersPage />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </Router>

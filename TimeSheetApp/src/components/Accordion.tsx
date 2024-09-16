@@ -1,11 +1,14 @@
 import { useState } from "react";
-import ClientDetails from "./ClientDetails";
 
-// interface Props {
-//   title: string;
-// }
+interface Props<T> {
+  object: T;
+  DetailsComponent: React.ComponentType<{ item: T }>;
+}
 
-const Accordion = ({ object }: any) => {
+const Accordion = <T extends unknown>({
+  object,
+  DetailsComponent,
+}: Props<T>) => {
   const [isActive, setIsActive] = useState(false);
 
   return (
@@ -13,10 +16,10 @@ const Accordion = ({ object }: any) => {
       <div className="accordion-wrap">
         <div className="item">
           <div onClick={() => setIsActive(!isActive)} className="heading">
-            <span>{object.name}</span>
+            <span>{(object as any).name}</span>
             <span>{isActive ? "-" : "+"}</span>
           </div>
-          {isActive && <ClientDetails client={object}></ClientDetails>}
+          {isActive && <DetailsComponent item={object} />}
         </div>
       </div>
     </>

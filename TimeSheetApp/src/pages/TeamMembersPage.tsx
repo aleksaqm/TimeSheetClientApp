@@ -1,19 +1,19 @@
 import Accordion from "../components/Accordion";
-import CategoryDetails from "../components/CategoryDetails";
 import DataHeader from "../components/DataHeader";
 import LetterFilter from "../components/LetterFilter";
 import NavBar from "../components/NavBar";
-import NewCategoryPopup from "../components/NewCategoryPopup";
+import NewTeamMemberPopup from "../components/NewTeamMemberPopup";
 import Pagination from "../components/Pagination";
 import StandardFooter from "../components/StandardFooter";
+import TeamMemberDetails from "../components/TeamMemberDetails";
 import UserSettings from "../components/UserSettings";
 import { DataProvider, useData } from "../hooks/DataContext";
-import CategoryType from "../types/CategoryType";
+import TeamMemberType from "../types/TeamMemberType";
 
-const CategoriesPage = () => {
+const TeamMembersPage = () => {
   return (
     <>
-      <DataProvider<CategoryType> url="https://localhost:7138/api/Category">
+      <DataProvider<TeamMemberType> url="https://localhost:7138/api/TeamMember">
         <div className="container">
           <header className="header">
             <div className="top-bar"></div>
@@ -22,10 +22,10 @@ const CategoriesPage = () => {
                 <img src="/logo.png" alt="VegaITSourcing Timesheet" />
               </a>
               <UserSettings name="Aleksa Perovic"></UserSettings>
-              <NavBar active="Categories"></NavBar>
+              <NavBar active="Team Members"></NavBar>
             </div>
           </header>
-          <CategorySection></CategorySection>
+          <TeamMemberSection></TeamMemberSection>
           <StandardFooter></StandardFooter>
         </div>
       </DataProvider>
@@ -33,40 +33,35 @@ const CategoriesPage = () => {
   );
 };
 
-const CategorySection = () => {
-  const {
-    data: categories,
-    isLoading,
-    error,
-    paginationInfo,
-  } = useData<CategoryType>();
+const TeamMemberSection = () => {
+  const { data, isLoading, error, paginationInfo } = useData<TeamMemberType>();
 
   return (
     <div className="wrapper">
       <section className="content">
         <h2>
-          <i className="ico clients"></i>Categories
+          <i className="ico clients"></i>Clients
         </h2>
         <DataHeader
-          useDataHook={useData<CategoryType>}
-          createPopup={<NewCategoryPopup />}
+          useDataHook={useData<TeamMemberType>}
+          createPopup={<NewTeamMemberPopup />}
         />
-        <LetterFilter useDataHook={useData<CategoryType>} />
+        <LetterFilter useDataHook={useData<TeamMemberType>} />
         <div className="accordion-wrap clients">
-          {isLoading && <div>Loading categories</div>}
+          {isLoading && <div>Loading clients</div>}
           {error && <div>{error}</div>}
-          {categories?.map((category) => (
+          {data?.map((client) => (
             <Accordion
-              key={category.id}
-              object={category}
-              DetailsComponent={CategoryDetails}
+              key={client.id}
+              object={client}
+              DetailsComponent={TeamMemberDetails}
             />
           ))}
         </div>
         {paginationInfo !== undefined && (
           <Pagination
             paginationData={paginationInfo}
-            useDataHook={useData<CategoryType>}
+            useDataHook={useData<TeamMemberType>}
           />
         )}
       </section>
@@ -74,4 +69,4 @@ const CategorySection = () => {
   );
 };
 
-export default CategoriesPage;
+export default TeamMembersPage;

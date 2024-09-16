@@ -59,20 +59,20 @@ const ActivitiesSection = () => {
   const handlePreviousWeek = (e: React.MouseEvent) => {
     e.preventDefault();
     const newWeekStart = new Date(weekStart);
-    newWeekStart.setDate(weekStart.getDate() - 7); // Move to the previous Monday
+    newWeekStart.setDate(weekStart.getDate() - 7);
     console.log(newWeekStart);
-    setWeekStart(newWeekStart); // Set the new start of the week
-    setSelectedDay(newWeekStart); // Update the selected day to the new Monday
-    setRefetchKey((prevKey) => prevKey + 1); // Trigger refetch
+    setWeekStart(newWeekStart);
+    setSelectedDay(newWeekStart);
+    setRefetchKey((prevKey) => prevKey + 1);
   };
 
   const handleNextWeek = (e: React.MouseEvent) => {
     e.preventDefault();
     const newWeekStart = new Date(weekStart);
-    newWeekStart.setDate(weekStart.getDate() + 7); // Move to the next Monday
-    setWeekStart(newWeekStart); // Update the week start
-    setSelectedDay(newWeekStart); // Select the new Monday
-    setRefetchKey((prevKey) => prevKey + 1); // Refetch data
+    newWeekStart.setDate(weekStart.getDate() + 7);
+    setWeekStart(newWeekStart);
+    setSelectedDay(newWeekStart);
+    setRefetchKey((prevKey) => prevKey + 1);
   };
 
   return (

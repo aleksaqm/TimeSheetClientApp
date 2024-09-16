@@ -9,7 +9,7 @@ import ClientType from "../types/ClientType";
 import { useData } from "../hooks/DataContext";
 
 interface Props {
-  client: {
+  item: {
     id: UUID;
     name: string;
     address: string;
@@ -19,16 +19,16 @@ interface Props {
   };
 }
 
-const ClientDetails = ({ client }: Props) => {
+const ClientDetails = ({ item }: Props) => {
   const { fetchData } = useData<ClientType>();
-  const [name, setName] = useState(client.name);
-  const [address, setAddress] = useState(client.address);
-  const [city, setCity] = useState(client.city);
-  const [country, setCountry] = useState(client.country);
-  const [postalCode, setPostalCode] = useState(client.postalCode);
+  const [name, setName] = useState(item.name);
+  const [address, setAddress] = useState(item.address);
+  const [city, setCity] = useState(item.city);
+  const [country, setCountry] = useState(item.country);
+  const [postalCode, setPostalCode] = useState(item.postalCode);
 
   const deleteClient = () => {
-    deleteRequest("https://localhost:7138/api/Client", client.id)
+    deleteRequest("https://localhost:7138/api/Client", item.id)
       .then(() => {
         fetchData(); // Fetch clients after deletion is successful
       })
@@ -40,7 +40,7 @@ const ClientDetails = ({ client }: Props) => {
   const updateClient = () => {
     //env fajl
     updateRequest("https://localhost:7138/api/Client", {
-      id: client.id,
+      id: item.id,
       name: name,
       address: address,
       city: city,
