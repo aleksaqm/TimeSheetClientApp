@@ -13,9 +13,16 @@ interface Props {
   isLoading: boolean;
   error: string | null;
   date: Date;
+  handleNewActivityCreated: () => void;
 }
 
-const ActivityTable = ({ data, isLoading, error, date }: Props) => {
+const ActivityTable = ({
+  data,
+  isLoading,
+  error,
+  date,
+  handleNewActivityCreated,
+}: Props) => {
   const [clients, setClients] = useState<ClientType[]>([]);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [projects, setProjects] = useState<ProjectType[]>([]);
@@ -75,6 +82,7 @@ const ActivityTable = ({ data, isLoading, error, date }: Props) => {
                 clients={clients}
                 projects={projects}
                 date={date}
+                handleNewActivityCreated={handleNewActivityCreated}
               ></NewActivityPopup>
             </Popup>
           </th>

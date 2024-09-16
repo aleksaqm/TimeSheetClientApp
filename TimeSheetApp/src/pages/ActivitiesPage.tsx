@@ -5,6 +5,7 @@ import StandardFooter from "../components/StandardFooter";
 import ActivityTable from "../components/ActivityTable";
 import { useLocation } from "react-router-dom";
 import useFetchActivities from "../hooks/useFetchActivities";
+import { useState } from "react";
 
 const ActivitiesPage = () => {
   return (
@@ -31,11 +32,17 @@ const ActivitiesSection = () => {
   const location = useLocation();
   const { date } = location.state || {};
   const currentDate = new Date(date);
+  const [refetchKey, setRefetchKey] = useState(0);
+
   const { data, isLoading, error } = useFetchActivities(
     "https://localhost:7138/api/Activity/Days",
     currentDate,
-    currentDate
+    currentDate,
+    refetchKey
   );
+  const handleNewActivityCreated = () => {
+    setRefetchKey((prevKey) => prevKey + 1);
+  };
   return (
     <>
       <div className="wrapper">
@@ -107,14 +114,21 @@ const ActivitiesSection = () => {
             isLoading={isLoading}
             error={error}
             date={date}
+            handleNewActivityCreated={handleNewActivityCreated}
           ></ActivityTable>
           <div className="total">
             <a href="index.html">
               <i></i>back to monthly view
             </a>
-            <span>
-              Total hours: <em>7.5</em>
-            </span>
+            {isLoading ? (
+              <span>
+                Total hours: <em>7.5</em>
+              </span>
+            ) : (
+              <span>
+                Total hours: <em>{data[0].totalHours}</em>
+              </span>
+            )}
           </div>
         </section>
       </div>

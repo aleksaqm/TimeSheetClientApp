@@ -12,9 +12,16 @@ interface Props {
   projects: ProjectType[];
   categories: CategoryType[];
   date: Date;
+  handleNewActivityCreated: () => void;
 }
 
-const NewActivityPopup = ({ clients, projects, categories, date }: Props) => {
+const NewActivityPopup = ({
+  clients,
+  projects,
+  categories,
+  date,
+  handleNewActivityCreated,
+}: Props) => {
   const [selectedClient, setSelectedClient] = useState<string>("");
   const [selectedProject, setSelectedProject] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -62,7 +69,13 @@ const NewActivityPopup = ({ clients, projects, categories, date }: Props) => {
       overtime: overtime,
       userId: "820529f3-cfde-43cc-b4ea-08dcd09c0d0d",
     };
-    createRequest("https://localhost:7138/api/Activity", newActivity);
+    createRequest("https://localhost:7138/api/Activity", newActivity)
+      .then(() => {
+        handleNewActivityCreated();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

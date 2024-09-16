@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import formatDate from "../utils/formatDate";
 import WorkDayType from "../types/WorkDayType";
 
-const useFetchActivities = (url: string, startDate: Date, endDate: Date) => {
+const useFetchActivities = (
+  url: string,
+  startDate: Date,
+  endDate: Date,
+  refetchKey: number
+) => {
   const [data, setData] = useState<WorkDayType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +44,7 @@ const useFetchActivities = (url: string, startDate: Date, endDate: Date) => {
     };
 
     fetchData();
-  }, [url]);
+  }, [url, refetchKey]);
   return { data, isLoading, error };
 };
 
