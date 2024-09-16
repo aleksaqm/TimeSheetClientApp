@@ -2,10 +2,10 @@ import { useState } from "react";
 import NavBar from "../components/NavBar";
 import StandardFooter from "../components/StandardFooter";
 import UserSettings from "../components/UserSettings";
-import useFetchCalendar from "../hooks/useFetchCalendar";
 import chunkArray from "../utils/chunkArray";
 import getMonthName from "../utils/getMonthName";
 import Calendar from "../components/Calendar";
+import useFetchCalendar from "../hooks/useFetchCalendar";
 
 const TimeSheetPage = () => {
   return (
@@ -65,14 +65,14 @@ const TimeSheetSection = () => {
         </h2>
         <div className="grey-box-wrap">
           <div className="top">
-            <a onClick={getPreviousMonth} href="" className="prev">
+            <a onClick={getPreviousMonth} href="javascript:;" className="prev">
               <i className="zmdi zmdi-chevron-left"></i>
               previous month
             </a>
             <span className="center">
               {getMonthName(month)}, {year}
             </span>
-            <a onClick={getNextMonth} href="" className="next">
+            <a onClick={getNextMonth} href="javascript:;" className="next">
               next month<i className="zmdi zmdi-chevron-right"></i>
             </a>
           </div>

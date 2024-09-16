@@ -67,7 +67,7 @@ const NewActivityPopup = ({
       description: description,
       hours: hours,
       overtime: overtime,
-      userId: "820529f3-cfde-43cc-b4ea-08dcd09c0d0d",
+      userId: "1361b478-de85-4eb4-a187-08dcd677a66c",
     };
     createRequest("https://localhost:7138/api/Activity", newActivity)
       .then(() => {

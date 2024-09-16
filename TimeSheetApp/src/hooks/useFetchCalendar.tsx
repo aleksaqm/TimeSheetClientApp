@@ -20,13 +20,14 @@ const useFetchCalendar = (url: string, month: number, year: number) => {
 
         const urlWithParams = new URL(url);
         const params = new URLSearchParams({
-          userId: "820529f3-cfde-43cc-b4ea-08dcd09c0d0d",
-          startDate: formatDate(startDate),
+          userId: "1361b478-de85-4eb4-a187-08dcd677a66c", // static userId
+          startDate: formatDate(startDate), // format to "YYYY-MM-DD"
           endDate: formatDate(endDate),
         });
 
         urlWithParams.search = params.toString();
 
+        // Fetch data from the backend
         const response = await fetch(urlWithParams.toString());
         if (!response.ok) {
           throw new Error("Failed to fetch activities");

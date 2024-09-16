@@ -6,6 +6,10 @@ import ActivityTable from "../components/ActivityTable";
 import { useLocation } from "react-router-dom";
 import useFetchActivities from "../hooks/useFetchActivities";
 import { useState } from "react";
+import getWeekDates from "../utils/getWeekDays";
+import formatDate from "../utils/formatDate";
+import getWeekDayName from "../utils/getWeekDayName";
+import getMonday from "../utils/getMonday";
 
 const ActivitiesPage = () => {
   return (
@@ -32,17 +36,45 @@ const ActivitiesSection = () => {
   const location = useLocation();
   const { date } = location.state || {};
   const currentDate = new Date(date);
+  const [selectedDay, setSelectedDay] = useState(currentDate);
   const [refetchKey, setRefetchKey] = useState(0);
+  const [weekStart, setWeekStart] = useState(getMonday(currentDate));
+  const weekDays = getWeekDates(weekStart);
 
   const { data, isLoading, error } = useFetchActivities(
     "https://localhost:7138/api/Activity/Days",
-    currentDate,
-    currentDate,
+    selectedDay,
+    selectedDay,
     refetchKey
   );
   const handleNewActivityCreated = () => {
     setRefetchKey((prevKey) => prevKey + 1);
   };
+
+  const changeDay = (day: Date) => {
+    setSelectedDay(day);
+    setRefetchKey((prevKey) => prevKey + 1);
+  };
+
+  const handlePreviousWeek = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const newWeekStart = new Date(weekStart);
+    newWeekStart.setDate(weekStart.getDate() - 7); // Move to the previous Monday
+    console.log(newWeekStart);
+    setWeekStart(newWeekStart); // Set the new start of the week
+    setSelectedDay(newWeekStart); // Update the selected day to the new Monday
+    setRefetchKey((prevKey) => prevKey + 1); // Trigger refetch
+  };
+
+  const handleNextWeek = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const newWeekStart = new Date(weekStart);
+    newWeekStart.setDate(weekStart.getDate() + 7); // Move to the next Monday
+    setWeekStart(newWeekStart); // Update the week start
+    setSelectedDay(newWeekStart); // Select the new Monday
+    setRefetchKey((prevKey) => prevKey + 1); // Refetch data
+  };
+
   return (
     <>
       <div className="wrapper">
@@ -52,60 +84,33 @@ const ActivitiesSection = () => {
           </h2>
           <div className="grey-box-wrap">
             <div className="top">
-              <a href="" className="prev">
-                <i className="zmdi zmdi-chevron-left"></i>previous week
+              <a onClick={handlePreviousWeek} href="" className="prev">
+                <i className="zmdi zmdi-chevron-left"></i>
+                previous week
               </a>
               <span className="center">
-                February 04 - February 10, 2013 (week 6)
+                {formatDate(weekDays[0])} -/- {formatDate(weekDays[6])}
               </span>
-              <a href="" className="next">
+              <a onClick={handleNextWeek} href="" className="next">
                 next week<i className="zmdi zmdi-chevron-right"></i>
               </a>
             </div>
             <div className="bottom">
               <ul className="days">
-                <li>
-                  <a href="javascript:;">
-                    <b>Feb 04</b>
-                    <span>monday</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:;">
-                    <b>Feb 06</b>
-                    <span>tuesday</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:;">
-                    <b>Feb 06</b>
-                    <span>wednesday</span>
-                  </a>
-                </li>
-                <li className="active">
-                  <a href="javascript:;">
-                    <b>Feb 07</b>
-                    <span>thursday</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:;">
-                    <b>Feb 08</b>
-                    <span>friday</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:;">
-                    <b>Feb 09</b>
-                    <span>saturday</span>
-                  </a>
-                </li>
-                <li className="last">
-                  <a href="javascript:;">
-                    <b>Feb 10</b>
-                    <span>sunday</span>
-                  </a>
-                </li>
+                {weekDays.map((day) => (
+                  <li>
+                    <a
+                      onClick={(e) => {
+                        e.preventDefault();
+                        changeDay(day);
+                      }}
+                      href=""
+                    >
+                      <b>{formatDate(day)}</b>
+                      <span>{getWeekDayName(day.getDay())}</span>
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -117,7 +122,7 @@ const ActivitiesSection = () => {
             handleNewActivityCreated={handleNewActivityCreated}
           ></ActivityTable>
           <div className="total">
-            <a href="index.html">
+            <a href="/timesheet">
               <i></i>back to monthly view
             </a>
             {isLoading ? (
