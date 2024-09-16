@@ -1,8 +1,8 @@
 import { UUID } from "crypto";
 
-interface ClientType{
+interface CategoryType{
     id: UUID,
     name: string;
 }
 
-export default ClientType;
+export default CategoryType;

@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
+import DaysHoursResponseType from "../types/DaysHoursResponseType";
 import formatDate from "../utils/formatDate";
-import WorkDayType from "../types/WorkDayType";
+import getDatesForMonthlyView from "../utils/getDatesForMonthlyView";
 
-const useFetchActivities = (url: string, startDate: Date, endDate: Date) => {
-  const [data, setData] = useState<WorkDayType[]>([]);
+const useFetchCalendar = (url: string, month: number, year: number) => {
+  const [data, setData] = useState<DaysHoursResponseType>({
+    dayHours: [],
+    totalHours: 0,
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("fechujemmm");
-
+    const { startDate, endDate } = getDatesForMonthlyView(month, year);
     const fetchData = async () => {
       try {
         setIsLoading(true);
@@ -39,8 +42,8 @@ const useFetchActivities = (url: string, startDate: Date, endDate: Date) => {
     };
 
     fetchData();
-  }, []);
+  }, [url, month, year]);
   return { data, isLoading, error };
 };
 
-export default useFetchActivities;
+export default useFetchCalendar;

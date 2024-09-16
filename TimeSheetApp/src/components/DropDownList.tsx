@@ -24,8 +24,8 @@ const DropDownList = ({
     <>
       <label>{labelText}</label>
       <select value={selectedValue} onChange={onHandleChange}>
-        {options.map((option) => (
-          <option key={option.key} value={option.value}>
+        {options.map((option, index) => (
+          <option key={index} value={option.value}>
             {option.value}
           </option>
         ))}

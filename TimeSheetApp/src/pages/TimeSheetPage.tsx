@@ -2,7 +2,7 @@ import { useState } from "react";
 import NavBar from "../components/NavBar";
 import StandardFooter from "../components/StandardFooter";
 import UserSettings from "../components/UserSettings";
-import useFetchActivities from "../hooks/useFetchActivities";
+import useFetchCalendar from "../hooks/useFetchCalendar";
 import chunkArray from "../utils/chunkArray";
 import getMonthName from "../utils/getMonthName";
 import Calendar from "../components/Calendar";
@@ -32,7 +32,7 @@ const TimeSheetSection = () => {
   const currentDate = new Date();
   const [month, setMonth] = useState(currentDate.getMonth());
   const [year, setYear] = useState(currentDate.getFullYear());
-  const { data, isLoading, error } = useFetchActivities(
+  const { data, isLoading, error } = useFetchCalendar(
     "https://localhost:7138/api/Activity/Hours",
     month,
     year
@@ -65,14 +65,14 @@ const TimeSheetSection = () => {
         </h2>
         <div className="grey-box-wrap">
           <div className="top">
-            <a onClick={getPreviousMonth} href="javascript:;" className="prev">
+            <a onClick={getPreviousMonth} href="" className="prev">
               <i className="zmdi zmdi-chevron-left"></i>
               previous month
             </a>
             <span className="center">
               {getMonthName(month)}, {year}
             </span>
-            <a onClick={getNextMonth} href="javascript:;" className="next">
+            <a onClick={getNextMonth} href="" className="next">
               next month<i className="zmdi zmdi-chevron-right"></i>
             </a>
           </div>

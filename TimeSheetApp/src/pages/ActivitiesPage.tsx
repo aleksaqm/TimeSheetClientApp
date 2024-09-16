@@ -3,12 +3,10 @@ import UserSettings from "../components/UserSettings";
 import NavBar from "../components/NavBar";
 import StandardFooter from "../components/StandardFooter";
 import ActivityTable from "../components/ActivityTable";
+import { useLocation } from "react-router-dom";
+import useFetchActivities from "../hooks/useFetchActivities";
 
 const ActivitiesPage = () => {
-  //   const location = useLocation();
-  //   const { date } = location.state || {};
-  //   const currentDate = new Date(date);
-
   return (
     <>
       <div className="container">
@@ -30,6 +28,14 @@ const ActivitiesPage = () => {
 };
 
 const ActivitiesSection = () => {
+  const location = useLocation();
+  const { date } = location.state || {};
+  const currentDate = new Date(date);
+  const { data, isLoading, error } = useFetchActivities(
+    "https://localhost:7138/api/Activity/Days",
+    currentDate,
+    currentDate
+  );
   return (
     <>
       <div className="wrapper">
@@ -96,7 +102,11 @@ const ActivitiesSection = () => {
               </ul>
             </div>
           </div>
-          <ActivityTable></ActivityTable>
+          <ActivityTable
+            data={data}
+            isLoading={isLoading}
+            error={error}
+          ></ActivityTable>
           <div className="total">
             <a href="index.html">
               <i></i>back to monthly view

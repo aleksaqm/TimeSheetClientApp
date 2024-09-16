@@ -1,6 +1,20 @@
+import ActivityType from "../types/ActivityType";
 import ActivityRow from "./ActivityRow";
 
-const ActivityTable = () => {
+interface Props {
+  data: any[];
+  isLoading: boolean;
+  error: string | null;
+}
+
+const ActivityTable = ({ data, isLoading, error }: Props) => {
+  // const { data, isLoading, error } = useFetchActivities(
+  //   "https://localhost:7138/api/Activity/Days",
+  //   date,
+  //   date
+  // );
+  // const workDay: WorkDayType = data[0];
+  // console.log(data);
   return (
     <>
       <table className="default-table">
@@ -19,14 +33,19 @@ const ActivityTable = () => {
             Time <em>*</em>
           </th>
           <th className="small">Overtime</th>
+          <th>
+            <button>Add new</button>
+          </th>
         </tr>
-        <ActivityRow></ActivityRow>
-        <ActivityRow></ActivityRow>
-        <ActivityRow></ActivityRow>
-        <ActivityRow></ActivityRow>
-        <ActivityRow></ActivityRow>
-        <ActivityRow></ActivityRow>
-        <ActivityRow></ActivityRow>
+
+        {isLoading ? (
+          <tr>Loading clients</tr>
+        ) : (
+          data[0].activities.map((activity: ActivityType) => (
+            <ActivityRow activity={activity}></ActivityRow>
+          ))
+        )}
+        {error && <tr>{error}</tr>}
       </table>
     </>
   );
