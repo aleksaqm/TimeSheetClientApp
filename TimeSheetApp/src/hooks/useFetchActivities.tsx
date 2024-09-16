@@ -39,7 +39,7 @@ const useFetchActivities = (url: string, startDate: Date, endDate: Date) => {
     };
 
     fetchData();
-  }, []);
+  }, [url]);
   return { data, isLoading, error };
 };
 

@@ -1,8 +1,68 @@
+import { useState } from "react";
+import CategoryType from "../types/CategoryType";
+import ClientType from "../types/ClientType";
+import ProjectType from "../types/ProjectType";
+import DropDownList from "./DropDownList";
 import TextInput from "./TextInput";
+import createRequest from "../services/createService";
+import formatDate from "../utils/formatDate";
 
-const NewActivityPopup = () => {
-  const printaj = () => {
-    console.log("aa");
+interface Props {
+  clients: ClientType[];
+  projects: ProjectType[];
+  categories: CategoryType[];
+  date: Date;
+}
+
+const NewActivityPopup = ({ clients, projects, categories, date }: Props) => {
+  const [selectedClient, setSelectedClient] = useState<string>("");
+  const [selectedProject, setSelectedProject] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
+  const [selectedClientIndex, setSelectedClientIndex] = useState(0);
+  const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
+  const [description, setDescription] = useState("");
+  const [hours, setHours] = useState(0);
+  const [overtime, setOvertime] = useState(0);
+
+  const categoryOptions = categories.map((category, index) => ({
+    key: index,
+    value: category.name,
+  }));
+  const projectOptions = projects.map((project, index) => ({
+    key: index,
+    value: project.name,
+  }));
+  const clientOptions = clients.map((client, index) => ({
+    key: index,
+    value: client.name,
+  }));
+
+  const clientChanged = (value: string, index: number) => {
+    setSelectedClient(value);
+    setSelectedClientIndex(index);
+  };
+  const projectChanged = (value: string, index: number) => {
+    setSelectedProject(value);
+    setSelectedProjectIndex(index);
+  };
+  const categoryChanged = (value: string, index: number) => {
+    setSelectedCategory(value);
+    setSelectedCategoryIndex(index);
+  };
+
+  const createActivity = () => {
+    const newActivity = {
+      date: formatDate(date),
+      clientId: clients[selectedClientIndex].id,
+      categoryId: categories[selectedCategoryIndex].id,
+      projectId: projects[selectedProjectIndex].id,
+      description: description,
+      hours: hours,
+      overtime: overtime,
+      userId: "820529f3-cfde-43cc-b4ea-08dcd09c0d0d",
+    };
+    createRequest("https://localhost:7138/api/Activity", newActivity);
   };
 
   return (
@@ -11,69 +71,63 @@ const NewActivityPopup = () => {
         <h2>Create new activity</h2>
         <ul className="form">
           <li>
-            <TextInput
-              type="text"
-              name=""
-              value="aa"
-              className="in-text"
+            <DropDownList
               labelText="Client:"
-              handleChange={(value) => console.log(value)}
-            ></TextInput>
+              options={clientOptions}
+              selected={selectedClient}
+              handleChange={clientChanged}
+            ></DropDownList>
           </li>
           <li>
-            <TextInput
-              type="text"
-              name=""
-              value="bb"
-              className="in-text"
+            <DropDownList
               labelText="Project:"
-              handleChange={(value) => console.log(value)}
-            ></TextInput>
+              options={projectOptions}
+              selected={selectedProject}
+              handleChange={projectChanged}
+            ></DropDownList>
           </li>
           <li>
-            <TextInput
-              type="text"
-              name=""
-              value="ccc"
-              className="in-text"
+            <DropDownList
               labelText="Category:"
-              handleChange={(value) => console.log(value)}
-            ></TextInput>
+              options={categoryOptions}
+              selected={selectedCategory}
+              handleChange={categoryChanged}
+            ></DropDownList>
           </li>
           <li>
             <TextInput
               type="text"
               name=""
-              value="ddd"
+              value={description}
               className="in-text"
               labelText="Description:"
-              handleChange={(value) => console.log(value)}
+              handleChange={(value) => setDescription(value)}
             ></TextInput>
           </li>
           <li>
             <TextInput
-              type="text"
+              type="number"
               name=""
-              value="ccc"
+              value={hours}
               className="in-text"
               labelText="Time:"
-              handleChange={(value) => console.log(value)}
+              handleChange={(value) => setHours(Number(value))}
             ></TextInput>
           </li>
           <li>
             <TextInput
-              type="text"
+              type="number"
               name=""
-              value="ccc"
+              value={overtime}
               className="in-text"
               labelText="Overtime:"
-              handleChange={(value) => console.log(value)}
+              handleChange={(value) => setOvertime(Number(value))}
             ></TextInput>
           </li>
         </ul>
         <div className="buttons">
           <div className="inner">
-            <a onClick={printaj} className="btn green">
+            <a onClick={createActivity} className="btn green">
               Save
             </a>
           </div>

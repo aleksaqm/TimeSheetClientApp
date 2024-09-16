@@ -106,6 +106,7 @@ const ActivitiesSection = () => {
             data={data}
             isLoading={isLoading}
             error={error}
+            date={date}
           ></ActivityTable>
           <div className="total">
             <a href="index.html">

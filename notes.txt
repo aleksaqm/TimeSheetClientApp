@@ -20,3 +20,5 @@ ne mutiraj
 
 key value za one genericke
 dal key tip a value objekat nesto tako
+
+userId zakovan i u new Activity popup
