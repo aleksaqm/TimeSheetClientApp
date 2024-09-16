@@ -4,7 +4,7 @@ interface Props {
   labelText: string;
   options: { key: number; value: string }[];
   selected: string;
-  handleChange: (newValue: string) => void;
+  handleChange: (newValue: string, newIndex: number) => void;
 }
 
 const DropDownList = ({
@@ -16,8 +16,10 @@ const DropDownList = ({
   const [selectedValue, setSelectedValue] = useState(selected);
 
   const onHandleChange = (event: any) => {
-    setSelectedValue(event.target.value);
-    handleChange(event.target.value);
+    const newValue = event.target.value;
+    const newIndex = options.findIndex((option) => option.value === newValue);
+    setSelectedValue(newValue);
+    handleChange(newValue, newIndex);
   };
 
   return (

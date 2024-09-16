@@ -8,3 +8,15 @@ kod delete i update => catch i loading
 env variable using vite
 
 refaktorisati mozda heder od kalendara
+
+imas sve nadjes po id koji je selektovan
+
+izdvoj useFetch
+podatke u url ili kroz kontekst
+
+promise.all
+
+ne mutiraj
+
+key value za one genericke
+dal key tip a value objekat nesto tako

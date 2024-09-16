@@ -1,5 +1,7 @@
+import Popup from "reactjs-popup";
 import ActivityType from "../types/ActivityType";
 import ActivityRow from "./ActivityRow";
+import NewActivityPopup from "./NewActivityPopup";
 
 interface Props {
   data: any[];
@@ -8,13 +10,6 @@ interface Props {
 }
 
 const ActivityTable = ({ data, isLoading, error }: Props) => {
-  // const { data, isLoading, error } = useFetchActivities(
-  //   "https://localhost:7138/api/Activity/Days",
-  //   date,
-  //   date
-  // );
-  // const workDay: WorkDayType = data[0];
-  // console.log(data);
   return (
     <>
       <table className="default-table">
@@ -34,7 +29,14 @@ const ActivityTable = ({ data, isLoading, error }: Props) => {
           </th>
           <th className="small">Overtime</th>
           <th>
-            <button>Add new</button>
+            <Popup
+              trigger={<button>Add New</button>}
+              position={"right center"}
+              modal
+              nested
+            >
+              <NewActivityPopup></NewActivityPopup>
+            </Popup>
           </th>
         </tr>
 
