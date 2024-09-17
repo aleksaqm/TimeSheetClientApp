@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "../auth/AuthContext";
 
 interface Props {
   name: string;
@@ -6,7 +7,8 @@ interface Props {
 
 const UserSettings = ({ name }: Props) => {
   const [isActive, setIsActive] = useState(false);
-
+  const { authToken, handleLogout } = useAuth();
+  console.log(authToken);
   return (
     <>
       <ul className="user right">
@@ -36,7 +38,7 @@ const UserSettings = ({ name }: Props) => {
           )}
         </li>
         <li className="last">
-          <a href="javascript:;">Logout</a>
+          <button onClick={handleLogout}>Logout</button>
         </li>
       </ul>
     </>

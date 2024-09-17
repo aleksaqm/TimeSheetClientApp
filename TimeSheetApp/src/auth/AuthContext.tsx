@@ -56,6 +56,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
   async function handleLogout() {
     setAuthToken(null);
+    navigate("/login");
   }
 
   return (
