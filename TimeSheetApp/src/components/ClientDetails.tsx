@@ -30,7 +30,7 @@ const ClientDetails = ({ item }: Props) => {
   const deleteClient = () => {
     deleteRequest("https://localhost:7138/api/Client", item.id)
       .then(() => {
-        fetchData(); // Fetch clients after deletion is successful
+        fetchData();
       })
       .catch((err) => {
         console.error("Error during deletion:", err);

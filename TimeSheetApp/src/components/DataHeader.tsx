@@ -29,7 +29,7 @@ const DataHeader = <T extends unknown>({
   return (
     <div className="grey-box-wrap reports">
       <Popup
-        trigger={<a className="link new-member-popup">Create new item</a>}
+        trigger={<a className="link new-member-popup">Create new</a>}
         position={"right center"}
         modal
         nested

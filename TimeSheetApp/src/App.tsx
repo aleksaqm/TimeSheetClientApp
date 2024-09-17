@@ -7,6 +7,7 @@ import ActivitiesPage from "./pages/ActivitiesPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import CategoriesPage from "./pages/CategoriesPage";
 import TeamMembersPage from "./pages/TeamMembersPage";
+import ReportsPage from "./pages/ReportsPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/categories" element={<CategoriesPage />} />
         <Route path="/teamMembers" element={<TeamMembersPage />} />
+        <Route path="/reports" element={<ReportsPage />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </Router>

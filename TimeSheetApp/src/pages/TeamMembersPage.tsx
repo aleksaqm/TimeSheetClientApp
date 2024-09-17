@@ -40,7 +40,7 @@ const TeamMemberSection = () => {
     <div className="wrapper">
       <section className="content">
         <h2>
-          <i className="ico clients"></i>Clients
+          <i className="ico clients"></i>Team Members
         </h2>
         <DataHeader
           useDataHook={useData<TeamMemberType>}

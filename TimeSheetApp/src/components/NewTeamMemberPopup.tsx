@@ -3,11 +3,12 @@ import TextInput from "./TextInput";
 import createRequest from "../services/createService";
 import TeamMemberType from "../types/TeamMemberType";
 import { useData } from "../hooks/DataContext";
+import { ToastContainer } from "react-toastify";
 
 const NewTeamMemberPopup = () => {
   const { fetchData } = useData<TeamMemberType>();
-  const [status, setStatus] = useState("");
-  const [role, setRole] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -19,12 +20,13 @@ const NewTeamMemberPopup = () => {
       email: email,
       username: username,
       hoursPerWeek: hours,
-      role: role,
-      status: status,
+      role: selectedRole,
+      status: selectedStatus,
     }).then(() => {
       fetchData();
     });
   };
+
   return (
     <>
       <div className="new-member-wrap">
@@ -74,49 +76,45 @@ const NewTeamMemberPopup = () => {
             <li className="inline">
               <label>Status:</label>
               <span className="radio">
-                <TextInput
-                  className=""
-                  name="status"
+                <label htmlFor="inactive">Inactive:</label>
+                <input
                   type="radio"
-                  labelText="Inactive:"
-                  handleChange={(_) => setStatus("Inactive")}
-                  value={0}
-                  checked={status === "Inactive"}
-                ></TextInput>
+                  id="Inactive"
+                  value="Inactive"
+                  checked={selectedStatus === "Inactive"}
+                  onChange={() => setSelectedStatus("Inactive")}
+                />
               </span>
-              <TextInput
-                className=""
-                name="status"
+              <label htmlFor="active">Active:</label>
+              <input
                 type="radio"
-                labelText="Active:"
-                handleChange={(_) => setStatus("Active")}
-                value={1}
-                checked={status === "Active"}
-              ></TextInput>
+                id="Active"
+                value="Active"
+                checked={selectedStatus === "Active"}
+                onChange={() => setSelectedStatus("Active")}
+              />
             </li>
             <li className="inline">
               <label>Role:</label>
               <span className="radio">
-                <TextInput
-                  className=""
-                  name="status"
+                <label htmlFor="admin">Admin:</label>
+                <input
                   type="radio"
-                  labelText="Admin:"
-                  handleChange={(_) => setRole("Admin")}
-                  value={0}
-                  checked={role === "Admin"}
-                ></TextInput>
+                  id="Admin"
+                  value="Admin"
+                  checked={selectedRole === "Admin"}
+                  onChange={() => setSelectedRole("Admin")}
+                />
               </span>
               <span className="radio">
-                <TextInput
-                  className=""
-                  name="status"
+                <label htmlFor="worker">Worker:</label>
+                <input
                   type="radio"
-                  labelText="Worker:"
-                  handleChange={(_) => setRole("Worker")}
-                  value={1}
-                  checked={role === "Worker"}
-                ></TextInput>
+                  id="Worker"
+                  value="Worker"
+                  checked={selectedRole === "Worker"}
+                  onChange={() => setSelectedRole("Worker")}
+                />
               </span>
             </li>
           </ul>
@@ -129,6 +127,7 @@ const NewTeamMemberPopup = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

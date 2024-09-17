@@ -1,0 +1,196 @@
+import { useEffect, useState } from "react";
+import CategoryType from "../types/CategoryType";
+import ClientType from "../types/ClientType";
+import ProjectType from "../types/ProjectType";
+import TeamMemberType from "../types/TeamMemberType";
+import getAll from "../services/getAllService";
+import DropDownList from "./DropDownList";
+import TextInput from "./TextInput";
+
+const ReportsHeader = () => {
+  const [members, setMembers] = useState<TeamMemberType[]>([]);
+  const [clients, setClients] = useState<ClientType[]>([]);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [projects, setProjects] = useState<ProjectType[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedClient, setSelectedClient] = useState<string>("All");
+  const [selectedProject, setSelectedProject] = useState<string>("All");
+  const [selectedMember, setSelectedMember] = useState<string>("All");
+  const [selectedMemberIndex, setSelectedMemberIndex] = useState(0);
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
+  const [selectedClientIndex, setSelectedClientIndex] = useState(0);
+  const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
+  const [startDate, setStardDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  const categoryOptions = [
+    { key: 0, value: "All" },
+    ...categories.map((category, index) => ({
+      key: index + 1, // Adjust index to start from 1
+      value: category.name,
+    })),
+  ];
+  const projectOptions = [
+    { key: 0, value: "All" },
+    ...projects.map((project, index) => ({
+      key: index + 1, // Adjust index to start from 1
+      value: project.name,
+    })),
+  ];
+
+  const clientOptions = [
+    { key: 0, value: "All" },
+    ...clients.map((client, index) => ({
+      key: index + 1, // Adjust index to start from 1
+      value: client.name,
+    })),
+  ];
+
+  const memberOptions = [
+    { key: 0, value: "All" }, // Prepend "All" option
+    ...members.map((member, index) => ({
+      key: index + 1, // Adjust index to start from 1
+      value: member.name,
+    })),
+  ];
+
+  const clientChanged = (value: string, index: number) => {
+    console.log(index);
+    setSelectedClient(value);
+    setSelectedClientIndex(index);
+  };
+  const projectChanged = (value: string, index: number) => {
+    setSelectedProject(value);
+    setSelectedProjectIndex(index);
+  };
+  const categoryChanged = (value: string, index: number) => {
+    setSelectedCategory(value);
+    setSelectedCategoryIndex(index);
+  };
+
+  const memberChanged = (value: string, index: number) => {
+    setSelectedMember(value);
+    setSelectedMemberIndex(index);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const clientsData = await getAll<ClientType[]>(
+          "https://localhost:7138/api/Client"
+        );
+        setClients(clientsData);
+
+        const categoriesData = await getAll<CategoryType[]>(
+          "https://localhost:7138/api/Category"
+        );
+        setCategories(categoriesData);
+
+        const projectsData = await getAll<ProjectType[]>(
+          "https://localhost:7138/api/Project"
+        );
+        setProjects(projectsData);
+
+        const teamMembersData = await getAll<TeamMemberType[]>(
+          "https://localhost:7138/api/TeamMember"
+        );
+        setMembers(teamMembersData);
+        //promise.all
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const resetSearch = () => {
+    setSelectedCategory("All");
+    setSelectedMember("All");
+    setSelectedClient("All");
+    setSelectedProject("All");
+    setSelectedCategoryIndex(0);
+    setSelectedMemberIndex(0);
+    setSelectedClientIndex(0);
+    setSelectedProjectIndex(0);
+    setStardDate("");
+    setEndDate("");
+  };
+
+  const getReport = () => {};
+
+  return (
+    <>
+      <div className="grey-box-wrap reports">
+        <ul className="form">
+          <li>
+            <DropDownList
+              labelText="Team member:"
+              options={memberOptions}
+              selected={selectedMember}
+              handleChange={memberChanged}
+            ></DropDownList>
+          </li>
+          <li>
+            <DropDownList
+              labelText="Category:"
+              options={categoryOptions}
+              selected={selectedCategory}
+              handleChange={categoryChanged}
+            ></DropDownList>
+          </li>
+        </ul>
+        <ul className="form">
+          <li>
+            <DropDownList
+              labelText="Client:"
+              options={clientOptions}
+              selected={selectedClient}
+              handleChange={clientChanged}
+            ></DropDownList>
+          </li>
+          <li>
+            <TextInput
+              type="text"
+              name=""
+              value={startDate}
+              className="in-text datepicker"
+              labelText="Start date::"
+              handleChange={(value) => setStardDate(value)}
+            ></TextInput>
+          </li>
+        </ul>
+        <ul className="form last">
+          <li>
+            <DropDownList
+              labelText="Project"
+              options={projectOptions}
+              selected={selectedProject}
+              handleChange={projectChanged}
+            ></DropDownList>
+          </li>
+          <li>
+            <TextInput
+              type="text"
+              name=""
+              value={endDate}
+              className="in-text datepicker"
+              labelText="End date::"
+              handleChange={(value) => setEndDate(value)}
+            ></TextInput>
+          </li>
+          <li>
+            <a onClick={resetSearch} href="" className="btn orange right">
+              Reset
+            </a>
+            <a onClick={getReport} href="" className="btn green right">
+              Search
+            </a>
+          </li>
+        </ul>
+      </div>
+    </>
+  );
+};
+
+export default ReportsHeader;

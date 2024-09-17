@@ -23,5 +23,4 @@ const deleteRequest = (url: string, id: any) => {
       });
   };
 
-  //loading state
 export default deleteRequest;
