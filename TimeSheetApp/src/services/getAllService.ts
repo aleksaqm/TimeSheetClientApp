@@ -1,16 +1,13 @@
+import apiClient from "./apiClient";
 
-const getAll = <T>(url: string): Promise<T> => {
-    return fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Could not fetch data");
-            }
-            return response.json() as Promise<T>;
-        })
-        .catch(err => {
-            console.error(err);
-            throw err;
-        });
-}   
+const getAll = async <T>(url: string): Promise<T> => {
+    try {
+      const response = await apiClient.get<T>(url);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Could not fetch data");
+    }
+  }; 
 
 export default getAll;

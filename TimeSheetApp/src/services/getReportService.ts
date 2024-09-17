@@ -1,29 +1,26 @@
 import GetReportType from "../types/GetReportType";
 import ReportResponse from "../types/ReportResponse";
+import apiClient from "./apiClient";
 
 const generateReport = async (url: string, params: GetReportType) => {
-    try {
-        const urlWithParams = new URL(url);
-        Object.keys(params).forEach((key) => {
-          const value = params[key as keyof GetReportType];
-          if (value != null) {
-            urlWithParams.searchParams.append(key, value.toString());
-          }
-        });
-        console.log(urlWithParams);
+  try {
+    const urlWithParams = new URL(url);
+    Object.keys(params).forEach((key) => {
+      const value = params[key as keyof GetReportType];
+      if (value != null) {
+        urlWithParams.searchParams.append(key, value.toString());
+      }
+    });
 
-        const response = await fetch(urlWithParams.toString());
-        if (!response.ok) {
-          throw new Error("Failed to fetch activities");
-        }
+    console.log(urlWithParams.toString());
 
-        const result = await response.json() as ReportResponse;
-        return result;
-      } 
-    catch(error: any) {
-        return null;
-    } 
+    const response = await apiClient.get<ReportResponse>(urlWithParams.toString());
 
-}
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
 
 export default generateReport

@@ -1,26 +1,19 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import apiClient from "./apiClient";
 
 const deleteRequest = (url: string, id: any) => {
-    return fetch(`${url}/${id}`, {
-      method: "DELETE",
+  return apiClient.delete(`${url}/${id}`)
+    .then(response => {
+      toast.success("Successfully deleted");
+      console.log(response);
+      return true;
     })
-      .then((response) => {
-        if (!response.ok) {
-          toast.error("Failed to delete");
-          throw new Error("Failed to delete");
-        }
-        return response.json();
-      })
-      .then(() => {
-        toast.success("Successfully deleted");
-        return true;
-      })
-      .catch((err) => {
-        console.error(err);
-        toast.error("An error occurred while deleting");
-        return false;
-      });
-  };
+    .catch(error => {
+      console.error(error);
+      toast.error("Failed to delete");
+      return false;
+    });
+};
 
 export default deleteRequest;

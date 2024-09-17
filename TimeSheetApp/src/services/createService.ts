@@ -1,23 +1,18 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import apiClient from "./apiClient";
 
 
-const createRequest = (url: string, object: any) =>{
-    return fetch(`${url}`, {
-        method: "POST",
-        body: JSON.stringify(object),
-        headers: {
-          "Content-type": "application/json",
-        },
-      })
+const createRequest = (url: string, object: any) => {
+    return apiClient.post(url, object)
       .then(response => {
-          response.json();
-          if (!response.ok){
-              toast.error("Failed to create");
-          }else{
-              toast.success("Successfully created");
-          }
+        toast.success("Successfully created");
+        return response.data;
       })
-}
+      .catch(error => {
+        toast.error("Failed to create");
+        console.error(error);
+      });
+  };
 
 export default createRequest;
