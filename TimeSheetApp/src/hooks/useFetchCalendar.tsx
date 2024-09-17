@@ -3,6 +3,7 @@ import DaysHoursResponseType from "../types/DaysHoursResponseType";
 import formatDate from "../utils/formatDate";
 import getDatesForMonthlyView from "../utils/getDatesForMonthlyView";
 import { getUserIdFromToken } from "../utils/getTokenData";
+import apiClient from "../services/apiClient";
 
 const useFetchCalendar = (url: string, month: number, year: number) => {
   const [data, setData] = useState<DaysHoursResponseType>({
@@ -14,6 +15,7 @@ const useFetchCalendar = (url: string, month: number, year: number) => {
 
   useEffect(() => {
     const { startDate, endDate } = getDatesForMonthlyView(month, year);
+
     const fetchData = async () => {
       try {
         setIsLoading(true);
@@ -24,6 +26,7 @@ const useFetchCalendar = (url: string, month: number, year: number) => {
         if (userId === undefined) {
           throw new Error("Invalid token");
         }
+
         const params = new URLSearchParams({
           userId: userId,
           startDate: formatDate(startDate),
@@ -32,14 +35,13 @@ const useFetchCalendar = (url: string, month: number, year: number) => {
 
         urlWithParams.search = params.toString();
 
-        // Fetch data from the backend
-        const response = await fetch(urlWithParams.toString());
-        if (!response.ok) {
-          throw new Error("Failed to fetch activities");
+        const response = await apiClient.get(urlWithParams.toString());
+
+        if (response.status !== 200) {
+          throw new Error("Failed to fetch calendar data");
         }
 
-        const result = await response.json();
-        setData(result);
+        setData(response.data);
       } catch (error: any) {
         setError(error.message);
       } finally {
@@ -49,6 +51,7 @@ const useFetchCalendar = (url: string, month: number, year: number) => {
 
     fetchData();
   }, [url, month, year]);
+
   return { data, isLoading, error };
 };
 

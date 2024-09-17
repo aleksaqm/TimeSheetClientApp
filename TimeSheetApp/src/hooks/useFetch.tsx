@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-//generic usefect type
+
 const useFetch = <T,>(url: any) => {
   const [data, setData] = useState<T[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -12,7 +12,6 @@ const useFetch = <T,>(url: any) => {
     })
       .then((response) => {
         if (!response.ok) {
-          // error coming back from server
           throw Error("could not fetch the data for that resource");
         }
         try {

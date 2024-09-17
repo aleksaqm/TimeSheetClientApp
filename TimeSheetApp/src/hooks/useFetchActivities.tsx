@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import formatDate from "../utils/formatDate";
 import WorkDayType from "../types/WorkDayType";
 import { getUserIdFromToken } from "../utils/getTokenData";
+import apiClient from "../services/apiClient";
 
 const useFetchActivities = (
   url: string,
@@ -14,7 +15,7 @@ const useFetchActivities = (
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("fechujemmm");
+    console.log("Fetching activities...");
 
     const fetchData = async () => {
       try {
@@ -35,13 +36,13 @@ const useFetchActivities = (
 
         urlWithParams.search = params.toString();
 
-        const response = await fetch(urlWithParams.toString());
-        if (!response.ok) {
+        const response = await apiClient.get(urlWithParams.toString());
+
+        if (response.status !== 200) {
           throw new Error("Failed to fetch activities");
         }
 
-        const result = await response.json();
-        setData(result);
+        setData(response.data); // Axios automatically parses JSON
       } catch (error: any) {
         setError(error.message);
       } finally {
@@ -50,7 +51,8 @@ const useFetchActivities = (
     };
 
     fetchData();
-  }, [url, refetchKey]);
+  }, [url, refetchKey, startDate, endDate]);
+
   return { data, isLoading, error };
 };
 

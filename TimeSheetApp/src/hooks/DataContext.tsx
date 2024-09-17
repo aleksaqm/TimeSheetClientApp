@@ -2,6 +2,7 @@ import { createContext, useState, useEffect, useContext } from "react";
 import DataContextType from "../types/DataContextType";
 import QueryParamsType from "../types/QueryParamsType";
 import PaginationType from "../types/PaginationType";
+import apiClient from "../services/apiClient";
 
 const DataContext = createContext<DataContextType<any> | undefined>(undefined);
 
@@ -34,19 +35,24 @@ export const DataProvider = <T,>({
       const urlWithParams = new URL(url);
       Object.keys(queryParams).forEach((key) => {
         const value = queryParams[key as keyof QueryParamsType];
-        urlWithParams.searchParams.append(key, value.toString());
+        if (value != null) {
+          urlWithParams.searchParams.append(key, value.toString());
+        }
       });
-      const response = await fetch(urlWithParams);
-      if (!response.ok) {
+
+      const response = await apiClient.get(urlWithParams.toString());
+
+      if (response.status !== 200) {
         throw new Error("Could not fetch data");
       }
-      const paginationHeader = response.headers.get("pagination");
+
+      const paginationHeader = response.headers["pagination"];
       const parsedPagination = paginationHeader
         ? JSON.parse(paginationHeader)
         : null;
       setPaginationInfo(parsedPagination);
-      const fetchedData = await response.json();
-      setData(fetchedData);
+
+      setData(response.data); // axios automatically parses JSON response
     } catch (err: any) {
       setError(err.message);
     } finally {
