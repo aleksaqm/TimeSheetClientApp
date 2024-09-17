@@ -6,8 +6,16 @@ import TeamMemberType from "../types/TeamMemberType";
 import getAll from "../services/getAllService";
 import DropDownList from "./DropDownList";
 import TextInput from "./TextInput";
+import GetReportType from "../types/GetReportType";
+import generateReport from "../services/getReportService";
+import ReportResponse from "../types/ReportResponse";
 
-const ReportsHeader = () => {
+interface Props {
+  setData: React.Dispatch<React.SetStateAction<ReportResponse>>;
+  setParams: React.Dispatch<React.SetStateAction<GetReportType | undefined>>;
+}
+
+const ReportsHeader = ({ setData, setParams }: Props) => {
   const [members, setMembers] = useState<TeamMemberType[]>([]);
   const [clients, setClients] = useState<ClientType[]>([]);
   const [categories, setCategories] = useState<CategoryType[]>([]);
@@ -117,7 +125,51 @@ const ReportsHeader = () => {
     setEndDate("");
   };
 
-  const getReport = () => {};
+  const getReport = async () => {
+    let categoryId;
+    let projectId;
+    let clientId;
+    let teamMemberId;
+    {
+      selectedCategoryIndex === 0
+        ? (categoryId = null)
+        : (categoryId = categories[selectedCategoryIndex - 1].id);
+    }
+    {
+      selectedProjectIndex === 0
+        ? (projectId = null)
+        : (projectId = projects[selectedProjectIndex - 1].id);
+    }
+    {
+      selectedClientIndex === 0
+        ? (clientId = null)
+        : (clientId = clients[selectedClientIndex - 1].id);
+    }
+    {
+      selectedMemberIndex === 0
+        ? (teamMemberId = null)
+        : (teamMemberId = members[selectedMemberIndex - 1].id);
+    }
+
+    const getReportObject: GetReportType = {
+      teamMemberId: teamMemberId,
+      clientId: clientId,
+      projectId: projectId,
+      categoryId: categoryId,
+      startDate: startDate,
+      endDate: endDate,
+    };
+
+    const data = await generateReport(
+      "https:localhost:7138/api/Report",
+      getReportObject
+    );
+
+    if (data !== null) {
+      setData(data);
+      setParams(getReportObject);
+    }
+  };
 
   return (
     <>
@@ -151,12 +203,15 @@ const ReportsHeader = () => {
           </li>
           <li>
             <TextInput
-              type="text"
+              type="date"
               name=""
               value={startDate}
               className="in-text datepicker"
               labelText="Start date::"
-              handleChange={(value) => setStardDate(value)}
+              handleChange={(value) => {
+                setStardDate(value);
+                console.log(value);
+              }}
             ></TextInput>
           </li>
         </ul>
@@ -171,7 +226,7 @@ const ReportsHeader = () => {
           </li>
           <li>
             <TextInput
-              type="text"
+              type="date"
               name=""
               value={endDate}
               className="in-text datepicker"
@@ -180,12 +235,12 @@ const ReportsHeader = () => {
             ></TextInput>
           </li>
           <li>
-            <a onClick={resetSearch} href="" className="btn orange right">
+            <button onClick={resetSearch} className="btn orange right">
               Reset
-            </a>
-            <a onClick={getReport} href="" className="btn green right">
+            </button>
+            <button onClick={getReport} className="btn green right">
               Search
-            </a>
+            </button>
           </li>
         </ul>
       </div>

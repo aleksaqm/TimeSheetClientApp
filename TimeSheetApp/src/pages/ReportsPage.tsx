@@ -1,7 +1,12 @@
+import { useState } from "react";
 import NavBar from "../components/NavBar";
 import ReportsHeader from "../components/ReportsHeader";
 import StandardFooter from "../components/StandardFooter";
 import UserSettings from "../components/UserSettings";
+import ReportResponse from "../types/ReportResponse";
+import ReportTable from "../components/ReportTable";
+import GetReportType from "../types/GetReportType";
+import ReportPrintSection from "../components/reportPrintSection";
 
 const ReportsPage = () => {
   return (
@@ -25,65 +30,27 @@ const ReportsPage = () => {
 };
 
 const ReportSection = () => {
+  const [data, setData] = useState<ReportResponse>({
+    reports: [],
+    reportTotalHours: 0,
+  });
+  const [params, setParams] = useState<GetReportType>();
+
   return (
     <div className="wrapper">
       <section className="content">
         <h2>
           <i className="ico report"></i>Reports
         </h2>
-        <ReportsHeader></ReportsHeader>
-        <table className="default-table">
-          <tr>
-            <th>Date</th>
-            <th>Team member</th>
-            <th>Projects</th>
-            <th>Categories</th>
-            <th>Description</th>
-            <th className="small">Time</th>
-          </tr>
-          <tr>
-            <td>2013-02-13</td>
-            <td>Slađana Miljanovic</td>
-            <td>Seachange - Nitro</td>
-            <td>Front-End Development</td>
-            <td>Lorem ipsum dolor sit amet</td>
-            <td className="small">7.5</td>
-          </tr>
-          <tr>
-            <td>2013-02-13</td>
-            <td>Sladjana Miljanovic</td>
-            <td>Seachange - Nitro</td>
-            <td>Front-End Development</td>
-            <td>Lorem ipsum dolor sit amet</td>
-            <td className="small">7.5</td>
-          </tr>
-          <tr>
-            <td>2013-02-13</td>
-            <td>Sladjana Miljanovic</td>
-            <td>Seachange - Nitro</td>
-            <td>Front-End Development</td>
-            <td>Lorem ipsum dolor sit amet</td>
-            <td className="small">7.5</td>
-          </tr>
-        </table>
+        <ReportsHeader setData={setData} setParams={setParams}></ReportsHeader>
+        {/* {data.reportTotalHours !== 0 && <div>IDEMOOOO</div>} */}
+        <ReportTable reportResponse={data}></ReportTable>
         <div className="total">
           <span>
-            Report total: <em>7.5</em>
+            Report total: <em>{data.reportTotalHours}</em>
           </span>
         </div>
-        <div className="grey-box-wrap reports">
-          <div className="btns-inner">
-            <a href="" className="btn white">
-              <span>Print report</span>
-            </a>
-            <a href="" className="btn white">
-              <span>Create PDF</span>
-            </a>
-            <a href="" className="btn white">
-              <span>Export to excel</span>
-            </a>
-          </div>
-        </div>
+        <ReportPrintSection getReportObject={params}></ReportPrintSection>
       </section>
     </div>
   );
