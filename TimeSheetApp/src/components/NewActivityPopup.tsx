@@ -6,6 +6,7 @@ import DropDownList from "./DropDownList";
 import TextInput from "./TextInput";
 import createRequest from "../services/createService";
 import formatDate from "../utils/formatDate";
+import { getUserIdFromToken } from "../utils/getTokenData";
 
 interface Props {
   clients: ClientType[];
@@ -67,7 +68,7 @@ const NewActivityPopup = ({
       description: description,
       hours: hours,
       overtime: overtime,
-      userId: "820529f3-cfde-43cc-b4ea-08dcd09c0d0d",
+      userId: getUserIdFromToken(),
     };
     createRequest("https://localhost:7138/api/Activity", newActivity)
       .then(() => {

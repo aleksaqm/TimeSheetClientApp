@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import formatDate from "../utils/formatDate";
 import WorkDayType from "../types/WorkDayType";
+import { getUserIdFromToken } from "../utils/getTokenData";
 
 const useFetchActivities = (
   url: string,
@@ -21,8 +22,13 @@ const useFetchActivities = (
         setError(null);
 
         const urlWithParams = new URL(url);
+        const userId = getUserIdFromToken();
+        if (userId === undefined) {
+          throw new Error("Invalid token");
+        }
+
         const params = new URLSearchParams({
-          userId: "820529f3-cfde-43cc-b4ea-08dcd09c0d0d",
+          userId: userId,
           startDate: formatDate(startDate),
           endDate: formatDate(endDate),
         });

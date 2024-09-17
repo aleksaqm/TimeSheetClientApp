@@ -12,7 +12,7 @@ const AuthContext = createContext<AuthContext | undefined>(undefined);
 type AuthProviderProps = PropsWithChildren;
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-  const [authToken, setAuthToken] = useState<string | null>();
+  const [authToken, setAuthToken] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const loginRequest = async (url: string, email: string, password: string) => {
@@ -48,6 +48,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       console.log("Received token:", token);
       setAuthToken(token);
 
+      localStorage.setItem("authToken", token);
+
       navigate("/timesheet");
     } catch {
       setAuthToken(null);
@@ -56,6 +58,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
   async function handleLogout() {
     setAuthToken(null);
+    localStorage.removeItem("authToken");
     navigate("/login");
   }
 

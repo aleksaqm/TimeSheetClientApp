@@ -38,7 +38,7 @@ const LoginPage = () => {
                   <button onClick={handleLogout}>Logout</button>
                 ) : (
                   <button
-                    className="btn"
+                    className="btn grn"
                     onClick={() => handleLogin(email, password)}
                   >
                     Login

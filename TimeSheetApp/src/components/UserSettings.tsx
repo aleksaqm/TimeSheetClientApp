@@ -1,14 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
+import { jwtDecode } from "jwt-decode";
+import JwtPayloadType from "../types/JwtPayloadType";
 
-interface Props {
-  name: string;
-}
-
-const UserSettings = ({ name }: Props) => {
+const UserSettings = () => {
   const [isActive, setIsActive] = useState(false);
-  const { authToken, handleLogout } = useAuth();
-  console.log(authToken);
+  const { handleLogout } = useAuth();
+  const authToken = localStorage.getItem("authToken");
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    if (authToken) {
+      const decoded: JwtPayloadType = jwtDecode<JwtPayloadType>(authToken);
+      setName(decoded.unique_name);
+    }
+  }, []);
+  const decodeToken = () => {
+    console.log(authToken);
+  };
+
   return (
     <>
       <ul className="user right">
@@ -40,6 +50,7 @@ const UserSettings = ({ name }: Props) => {
         <li className="last">
           <button onClick={handleLogout}>Logout</button>
         </li>
+        <button onClick={decodeToken}></button>
       </ul>
     </>
   );

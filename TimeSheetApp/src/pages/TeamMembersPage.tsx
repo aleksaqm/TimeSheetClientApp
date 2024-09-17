@@ -21,7 +21,7 @@ const TeamMembersPage = () => {
               <a href="/" className="logo">
                 <img src="/logo.png" alt="VegaITSourcing Timesheet" />
               </a>
-              <UserSettings name="Aleksa Perovic"></UserSettings>
+              <UserSettings></UserSettings>
               <NavBar active="Team Members"></NavBar>
             </div>
           </header>

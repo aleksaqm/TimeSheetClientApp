@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import DaysHoursResponseType from "../types/DaysHoursResponseType";
 import formatDate from "../utils/formatDate";
 import getDatesForMonthlyView from "../utils/getDatesForMonthlyView";
+import { getUserIdFromToken } from "../utils/getTokenData";
 
 const useFetchCalendar = (url: string, month: number, year: number) => {
   const [data, setData] = useState<DaysHoursResponseType>({
@@ -19,8 +20,12 @@ const useFetchCalendar = (url: string, month: number, year: number) => {
         setError(null);
 
         const urlWithParams = new URL(url);
+        const userId = getUserIdFromToken();
+        if (userId === undefined) {
+          throw new Error("Invalid token");
+        }
         const params = new URLSearchParams({
-          userId: "820529f3-cfde-43cc-b4ea-08dcd09c0d0d",
+          userId: userId,
           startDate: formatDate(startDate),
           endDate: formatDate(endDate),
         });

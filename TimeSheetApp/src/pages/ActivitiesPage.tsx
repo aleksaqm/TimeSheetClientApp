@@ -21,7 +21,7 @@ const ActivitiesPage = () => {
             <a href="/" className="logo">
               <img src="/logo.png" alt="VegaITSourcing Timesheet" />
             </a>
-            <UserSettings name="Aleksa Perovic"></UserSettings>
+            <UserSettings></UserSettings>
             <NavBar active="TimeSheet"></NavBar>
           </div>
         </header>

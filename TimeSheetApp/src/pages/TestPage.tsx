@@ -21,7 +21,7 @@ const TestPage = () => {
               <a href="/" className="logo">
                 <img src="/logo.png" alt="VegaITSourcing Timesheet" />
               </a>
-              <UserSettings name="Aleksa Perovic"></UserSettings>
+              <UserSettings></UserSettings>
               <NavBar active="Clients"></NavBar>
             </div>
           </header>

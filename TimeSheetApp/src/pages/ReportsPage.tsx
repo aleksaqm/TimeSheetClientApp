@@ -6,7 +6,7 @@ import UserSettings from "../components/UserSettings";
 import ReportResponse from "../types/ReportResponse";
 import ReportTable from "../components/ReportTable";
 import GetReportType from "../types/GetReportType";
-import ReportPrintSection from "../components/reportPrintSection";
+import ReportPrintSection from "../components/ReportPrintSection";
 
 const ReportsPage = () => {
   return (
@@ -18,7 +18,7 @@ const ReportsPage = () => {
             <a href="/" className="logo">
               <img src="/logo.png" alt="VegaITSourcing Timesheet" />
             </a>
-            <UserSettings name="Aleksa Perovic"></UserSettings>
+            <UserSettings></UserSettings>
             <NavBar active="Reports"></NavBar>
           </div>
         </header>
