@@ -1,6 +1,5 @@
 import "../scss/style.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import TestPage from "./pages/TestPage";
 import NoPage from "./pages/NoPage";
 import TimeSheetPage from "./pages/TimeSheetPage";
 import ActivitiesPage from "./pages/ActivitiesPage";
@@ -12,6 +11,7 @@ import LoginPage from "./pages/LoginPage";
 import AuthProvider from "./auth/AuthContext";
 import RegisterPage from "./pages/RegisterPage";
 import ProtectedRoute from "./auth/ProtectedRoute";
+import ClientsPage from "./pages/ClintsPage";
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
             path="/clients"
             element={
               <ProtectedRoute>
-                <TestPage />
+                <ClientsPage />
               </ProtectedRoute>
             }
           />
@@ -30,7 +30,7 @@ function App() {
             path="/test"
             element={
               <ProtectedRoute>
-                <TestPage />
+                <ClientsPage />
               </ProtectedRoute>
             }
           />

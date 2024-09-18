@@ -10,7 +10,7 @@ import UserSettings from "../components/UserSettings";
 import { DataProvider, useData } from "../hooks/DataContext";
 import ClientType from "../types/ClientType";
 
-const TestPage = () => {
+const ClientsPage = () => {
   return (
     <>
       <DataProvider<ClientType> url="Client">
@@ -69,4 +69,4 @@ const ClientSection = () => {
   );
 };
 
-export default TestPage;
+export default ClientsPage;

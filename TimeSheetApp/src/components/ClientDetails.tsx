@@ -38,7 +38,6 @@ const ClientDetails = ({ item }: Props) => {
   };
 
   const updateClient = () => {
-    //env fajl
     updateRequest("Client", {
       id: item.id,
       name: name,

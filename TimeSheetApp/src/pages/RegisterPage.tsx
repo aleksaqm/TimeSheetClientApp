@@ -2,6 +2,9 @@ import { useState } from "react";
 import TextInput from "../components/TextInput";
 import registerRequest from "../services/registerService";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -21,6 +24,8 @@ const RegisterPage = () => {
       password,
       role
     ).then(() => {
+      toast.success("Successfully registered, login now!");
+
       navigate("/login");
     });
   };
@@ -104,6 +109,7 @@ const RegisterPage = () => {
           </ul>
         </div>
       </div>
+      <ToastContainer></ToastContainer>
     </>
   );
 };

@@ -1,6 +1,2 @@
-refaktorisati mozda heder od kalendara
-
-promise.all
-
 reset password dugme
 

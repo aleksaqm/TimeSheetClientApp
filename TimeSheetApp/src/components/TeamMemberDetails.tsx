@@ -150,9 +150,9 @@ const TeamMemberDetails = ({ item }: Props) => {
             <a onClick={deleteClient} href="" className="btn red">
               Delete
             </a>
-            <a href="" className="btn orange">
+            {/* <a href="" className="btn orange">
               Reset Password
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

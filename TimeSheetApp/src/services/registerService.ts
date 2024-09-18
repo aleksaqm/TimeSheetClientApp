@@ -1,4 +1,6 @@
 import apiClient from "./apiClient";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const registerRequest = async (url: string, name:string, username: string, email: string, password: string, role: number) => {
     try {
@@ -11,7 +13,8 @@ const registerRequest = async (url: string, name:string, username: string, email
       });
 
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.response.data["detail"]);
       console.error("Error during register:", error);
       throw error;
     }

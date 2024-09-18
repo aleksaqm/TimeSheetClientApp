@@ -1,6 +1,8 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../services/apiClient";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type AuthContext = {
   authToken?: string | null;
@@ -24,8 +26,9 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       });
 
       return response.data;
-    } catch (error) {
-      console.error("Error during login:", error);
+    } catch (error: any) {
+      console.log(error.response.data["detail"]);
+      toast.error(error.response.data["detail"]);
       throw error;
     }
   };

@@ -88,7 +88,10 @@ const ActivityTable = ({
           <tr>Loading clients</tr>
         ) : (
           data[0].activities.map((activity: ActivityType) => (
-            <ActivityRow activity={activity}></ActivityRow>
+            <ActivityRow
+              activity={activity}
+              handleActivityDeleted={handleNewActivityCreated}
+            ></ActivityRow>
           ))
         )}
         {error && <tr>{error}</tr>}

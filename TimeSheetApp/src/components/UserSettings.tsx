@@ -15,10 +15,6 @@ const UserSettings = () => {
       setName(decoded.unique_name);
     }
   }, []);
-  const decodeToken = () => {
-    const apiKey = import.meta.env.VITE_API_URL;
-    console.log(apiKey);
-  };
 
   return (
     <>
@@ -51,7 +47,6 @@ const UserSettings = () => {
         <li className="last">
           <button onClick={handleLogout}>Logout</button>
         </li>
-        <button onClick={decodeToken}></button>
       </ul>
     </>
   );

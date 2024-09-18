@@ -2,6 +2,7 @@ import { useState } from "react";
 import TextInput from "../components/TextInput";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -59,6 +60,7 @@ const LoginPage = () => {
           </ul>
         </div>
       </div>
+      <ToastContainer></ToastContainer>
     </>
   );
 };

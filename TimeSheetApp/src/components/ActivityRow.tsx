@@ -7,12 +7,15 @@ import ClientType from "../types/ClientType";
 import ActivityType from "../types/ActivityType";
 import TextInput from "./TextInput";
 import updateRequest from "../services/updateService";
+import deleteRequest from "../services/deleteService";
+import { ToastContainer } from "react-toastify";
 
 interface Props {
   activity: ActivityType;
+  handleActivityDeleted: () => void;
 }
 
-const ActivityRow = ({ activity }: Props) => {
+const ActivityRow = ({ activity, handleActivityDeleted }: Props) => {
   const [clients, setClients] = useState<ClientType[]>([]);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [projects, setProjects] = useState<ProjectType[]>([]);
@@ -99,7 +102,6 @@ const ActivityRow = ({ activity }: Props) => {
   };
 
   const updateActivity = () => {
-    console.log(selectedCategoryIndex);
     const updatedActivity: ActivityType = {
       id: activity.id,
       categoryId: categories[selectedCategoryIndex].id,
@@ -112,6 +114,11 @@ const ActivityRow = ({ activity }: Props) => {
       userId: activity.userId,
     };
     updateRequest("Activity", updatedActivity);
+  };
+
+  const deleteActivity = async () => {
+    await deleteRequest("Activity", activity.id);
+    handleActivityDeleted();
   };
 
   return (
@@ -186,7 +193,11 @@ const ActivityRow = ({ activity }: Props) => {
         <td>
           <button onClick={updateActivity}>update </button>
         </td>
+        <td>
+          <button onClick={deleteActivity}>delete</button>
+        </td>
       </tr>
+      <ToastContainer></ToastContainer>
     </>
   );
 };
