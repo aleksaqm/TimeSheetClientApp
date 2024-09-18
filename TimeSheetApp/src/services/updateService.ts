@@ -11,8 +11,12 @@ const updateRequest = async (url: string, object: any) => {
       },
     });
 
-    if (response.status !== 200 && response.status !== 204) {
-      toast.error("Failed to update");
+    if (response.status !== 200) {
+      if (response.status === 403){
+        toast.error("You don't have permission to do that");
+      }else{
+        toast.error("Failed to update");
+      }
     } else {
       toast.success("Successfully updated");
     }

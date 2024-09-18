@@ -10,7 +10,7 @@ const createRequest = (url: string, object: any) => {
         return response.data;
       })
       .catch(error => {
-        toast.error("Failed to create");
+        toast.error("You don't have permission to do that");
         console.error(error);
       });
   };

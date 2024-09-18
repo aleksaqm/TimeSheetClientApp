@@ -1,19 +1,6 @@
-
-kod delete i update => catch i loading 
-
-env variable using vite
-
 refaktorisati mozda heder od kalendara
-
-
-izdvoj useFetch
-podatke u url ili kroz kontekst
 
 promise.all
 
-ne mutiraj
-
-
 reset password dugme
 
-back to monthly view
