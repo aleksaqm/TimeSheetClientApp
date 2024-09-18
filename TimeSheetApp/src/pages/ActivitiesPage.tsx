@@ -82,6 +82,7 @@ const ActivitiesSection = () => {
           <h2>
             <i className="ico timesheet"></i>TimeSheet
           </h2>
+
           <div className="grey-box-wrap">
             <div className="top">
               <a onClick={handlePreviousWeek} href="" className="prev">
@@ -98,7 +99,13 @@ const ActivitiesSection = () => {
             <div className="bottom">
               <ul className="days">
                 {weekDays.map((day) => (
-                  <li>
+                  <li
+                    className={
+                      day.toDateString() === selectedDay.toDateString()
+                        ? "active"
+                        : ""
+                    }
+                  >
                     <a
                       onClick={(e) => {
                         e.preventDefault();
@@ -118,7 +125,7 @@ const ActivitiesSection = () => {
             data={data}
             isLoading={isLoading}
             error={error}
-            date={date}
+            date={selectedDay}
             handleNewActivityCreated={handleNewActivityCreated}
           ></ActivityTable>
           <div className="total">
