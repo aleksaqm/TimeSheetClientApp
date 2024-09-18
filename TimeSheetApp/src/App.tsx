@@ -11,20 +11,77 @@ import ReportsPage from "./pages/ReportsPage";
 import LoginPage from "./pages/LoginPage";
 import AuthProvider from "./auth/AuthContext";
 import RegisterPage from "./pages/RegisterPage";
+import ProtectedRoute from "./auth/ProtectedRoute";
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <Routes>
-          <Route path="/clients" element={<TestPage />} />
-          <Route path="/test" element={<TestPage />} />
-          <Route path="/timesheet" element={<TimeSheetPage />} />
-          <Route path="/activities" element={<ActivitiesPage />} />
-          <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/teamMembers" element={<TeamMembersPage />} />
-          <Route path="/reports" element={<ReportsPage />} />
+          <Route
+            path="/clients"
+            element={
+              <ProtectedRoute>
+                <TestPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/test"
+            element={
+              <ProtectedRoute>
+                <TestPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/timesheet"
+            element={
+              <ProtectedRoute>
+                <TimeSheetPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/activities"
+            element={
+              <ProtectedRoute>
+                <ActivitiesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/projects"
+            element={
+              <ProtectedRoute>
+                <ProjectsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/categories"
+            element={
+              <ProtectedRoute>
+                <CategoriesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/teamMembers"
+            element={
+              <ProtectedRoute>
+                <TeamMembersPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/reports"
+            element={
+              <ProtectedRoute>
+                <ReportsPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="*" element={<NoPage />} />
