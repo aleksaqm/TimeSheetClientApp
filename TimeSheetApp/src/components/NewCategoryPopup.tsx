@@ -10,7 +10,7 @@ const NewCategoryPopup = () => {
   const [name, setName] = useState("");
 
   const addCategory = () => {
-    createRequest("https://localhost:7138/api/Category", {
+    createRequest("Category", {
       name: name,
     }).then(() => {
       fetchData();

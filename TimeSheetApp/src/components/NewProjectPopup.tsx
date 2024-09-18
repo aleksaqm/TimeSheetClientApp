@@ -66,7 +66,7 @@ const NewProjectPopup = () => {
       customerId: clients[selectedClientIndex].id,
       leadId: members[selectedMemberIndex].id,
     };
-    createRequest("https://localhost:7138/api/Project", newProject)
+    createRequest("Project", newProject)
       .then(() => {
         fetchData();
       })

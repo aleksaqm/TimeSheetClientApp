@@ -16,7 +16,8 @@ const UserSettings = () => {
     }
   }, []);
   const decodeToken = () => {
-    console.log(authToken);
+    const apiKey = import.meta.env.VITE_API_URL;
+    console.log(apiKey);
   };
 
   return (

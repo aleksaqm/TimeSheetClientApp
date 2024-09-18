@@ -28,9 +28,9 @@ const CategoryDetails = ({ item }: Props) => {
   };
 
   const deleteCategory = () => {
-    deleteRequest("https://localhost:7138/api/Category", item.id)
+    deleteRequest("Category", item.id)
       .then(() => {
-        fetchData(); // Fetch clients after deletion is successful
+        fetchData();
       })
       .catch((err) => {
         console.error("Error during deletion:", err);

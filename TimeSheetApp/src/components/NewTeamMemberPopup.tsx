@@ -15,7 +15,7 @@ const NewTeamMemberPopup = () => {
   const [hours, setHours] = useState(0);
 
   const InviteTeamMember = () => {
-    createRequest("https://localhost:7138/api/TeamMember", {
+    createRequest("TeamMember", {
       name: name,
       email: email,
       username: username,

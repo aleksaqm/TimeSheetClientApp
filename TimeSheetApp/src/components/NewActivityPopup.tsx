@@ -70,7 +70,7 @@ const NewActivityPopup = ({
       overtime: overtime,
       userId: getUserIdFromToken(),
     };
-    createRequest("https://localhost:7138/api/Activity", newActivity)
+    createRequest("Activity", newActivity)
       .then(() => {
         handleNewActivityCreated();
       })

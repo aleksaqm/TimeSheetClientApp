@@ -15,7 +15,7 @@ const NewClientPopup = () => {
   const [postalCode, setPostalCode] = useState("");
 
   const addClient = () => {
-    createRequest("https://localhost:7138/api/Client", {
+    createRequest("Client", {
       name: name,
       address: address,
       city: city,
