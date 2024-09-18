@@ -84,24 +84,16 @@ const ReportsHeader = ({ setData, setParams }: Props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const clientsData = await getAll<ClientType[]>(
-          "https://localhost:7138/api/Client"
-        );
+        const clientsData = await getAll<ClientType[]>("Client");
         setClients(clientsData);
 
-        const categoriesData = await getAll<CategoryType[]>(
-          "https://localhost:7138/api/Category"
-        );
+        const categoriesData = await getAll<CategoryType[]>("Category");
         setCategories(categoriesData);
 
-        const projectsData = await getAll<ProjectType[]>(
-          "https://localhost:7138/api/Project"
-        );
+        const projectsData = await getAll<ProjectType[]>("Project");
         setProjects(projectsData);
 
-        const teamMembersData = await getAll<TeamMemberType[]>(
-          "https://localhost:7138/api/TeamMember"
-        );
+        const teamMembersData = await getAll<TeamMemberType[]>("TeamMember");
         setMembers(teamMembersData);
         //promise.all
       } catch (error) {
@@ -160,10 +152,7 @@ const ReportsHeader = ({ setData, setParams }: Props) => {
       endDate: endDate,
     };
 
-    const data = await generateReport(
-      "https:localhost:7138/api/Report",
-      getReportObject
-    );
+    const data = await generateReport("Report", getReportObject);
 
     if (data !== null) {
       setData(data);

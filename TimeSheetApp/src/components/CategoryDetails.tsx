@@ -15,7 +15,7 @@ const CategoryDetails = ({ item }: Props) => {
   const [name, setName] = useState(item.name);
 
   const updateCategory = () => {
-    updateRequest("https://localhost:7138/api/Category", {
+    updateRequest("Category", {
       id: item.id,
       name: name,
     })

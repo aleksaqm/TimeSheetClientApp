@@ -32,7 +32,8 @@ export const DataProvider = <T,>({
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const urlWithParams = new URL(url);
+      const fullUrl = import.meta.env.VITE_API_URL + url;
+      const urlWithParams = new URL(fullUrl);
       Object.keys(queryParams).forEach((key) => {
         const value = queryParams[key as keyof QueryParamsType];
         if (value != null) {
@@ -52,7 +53,7 @@ export const DataProvider = <T,>({
         : null;
       setPaginationInfo(parsedPagination);
 
-      setData(response.data); // axios automatically parses JSON response
+      setData(response.data);
     } catch (err: any) {
       setError(err.message);
     } finally {

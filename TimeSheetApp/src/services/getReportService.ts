@@ -4,7 +4,9 @@ import apiClient from "./apiClient";
 
 const generateReport = async (url: string, params: GetReportType) => {
   try {
-    const urlWithParams = new URL(url);
+    const fullUrl = import.meta.env.VITE_API_URL + url;
+    
+    const urlWithParams = new URL(fullUrl);
     Object.keys(params).forEach((key) => {
       const value = params[key as keyof GetReportType];
       if (value != null) {

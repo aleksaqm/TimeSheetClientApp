@@ -42,7 +42,7 @@ const ActivitiesSection = () => {
   const weekDays = getWeekDates(weekStart);
 
   const { data, isLoading, error } = useFetchActivities(
-    "https://localhost:7138/api/Activity/Days",
+    "Activity/Days",
     selectedDay,
     selectedDay,
     refetchKey

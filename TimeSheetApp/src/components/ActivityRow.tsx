@@ -29,19 +29,13 @@ const ActivityRow = ({ activity }: Props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const clientsData = await getAll<ClientType[]>(
-          "https://localhost:7138/api/Client"
-        );
+        const clientsData = await getAll<ClientType[]>("Client");
         setClients(clientsData);
 
-        const categoriesData = await getAll<CategoryType[]>(
-          "https://localhost:7138/api/Category"
-        );
+        const categoriesData = await getAll<CategoryType[]>("Category");
         setCategories(categoriesData);
 
-        const projectsData = await getAll<ProjectType[]>(
-          "https://localhost:7138/api/Project"
-        );
+        const projectsData = await getAll<ProjectType[]>("Project");
         setProjects(projectsData);
 
         const selectedCategoryItem = categoriesData.find(
@@ -112,7 +106,7 @@ const ActivityRow = ({ activity }: Props) => {
       overtime: overtime,
       userId: activity.userId,
     };
-    updateRequest("https://localhost:7138/api/Activity", updatedActivity);
+    updateRequest("Activity", updatedActivity);
   };
 
   return (

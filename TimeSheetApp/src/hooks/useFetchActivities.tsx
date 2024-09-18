@@ -22,7 +22,9 @@ const useFetchActivities = (
         setIsLoading(true);
         setError(null);
 
-        const urlWithParams = new URL(url);
+        const fullUrl = import.meta.env.VITE_API_URL + url;
+
+        const urlWithParams = new URL(fullUrl);
         const userId = getUserIdFromToken();
         if (userId === undefined) {
           throw new Error("Invalid token");
@@ -42,7 +44,7 @@ const useFetchActivities = (
           throw new Error("Failed to fetch activities");
         }
 
-        setData(response.data); // Axios automatically parses JSON
+        setData(response.data);
       } catch (error: any) {
         setError(error.message);
       } finally {

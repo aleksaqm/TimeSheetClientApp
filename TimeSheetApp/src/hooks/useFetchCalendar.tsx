@@ -21,7 +21,9 @@ const useFetchCalendar = (url: string, month: number, year: number) => {
         setIsLoading(true);
         setError(null);
 
-        const urlWithParams = new URL(url);
+        const fullUrl = import.meta.env.VITE_API_URL + url;
+
+        const urlWithParams = new URL(fullUrl);
         const userId = getUserIdFromToken();
         if (userId === undefined) {
           throw new Error("Invalid token");

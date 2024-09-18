@@ -15,5 +15,5 @@ ne mutiraj
 
 
 reset password dugme
-ponedeljak ti samo radi
-vidi dobro te datume
+
+back to monthly view

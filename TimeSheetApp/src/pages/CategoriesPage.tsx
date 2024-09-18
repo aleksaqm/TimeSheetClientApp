@@ -13,7 +13,7 @@ import CategoryType from "../types/CategoryType";
 const CategoriesPage = () => {
   return (
     <>
-      <DataProvider<CategoryType> url="https://localhost:7138/api/Category">
+      <DataProvider<CategoryType> url={"Category"}>
         <div className="container">
           <header className="header">
             <div className="top-bar"></div>

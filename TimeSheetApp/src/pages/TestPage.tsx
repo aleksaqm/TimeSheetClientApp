@@ -13,7 +13,7 @@ import ClientType from "../types/ClientType";
 const TestPage = () => {
   return (
     <>
-      <DataProvider<ClientType> url="https://localhost:7138/api/Client">
+      <DataProvider<ClientType> url="Client">
         <div className="container">
           <header className="header">
             <div className="top-bar"></div>

@@ -33,7 +33,7 @@ const TimeSheetSection = () => {
   const [month, setMonth] = useState(currentDate.getMonth());
   const [year, setYear] = useState(currentDate.getFullYear());
   const { data, isLoading, error } = useFetchCalendar(
-    "https://localhost:7138/api/Activity/Hours",
+    "Activity/Hours",
     month,
     year
   );

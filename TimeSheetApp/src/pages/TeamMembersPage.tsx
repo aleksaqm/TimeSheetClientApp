@@ -13,7 +13,7 @@ import TeamMemberType from "../types/TeamMemberType";
 const TeamMembersPage = () => {
   return (
     <>
-      <DataProvider<TeamMemberType> url="https://localhost:7138/api/TeamMember">
+      <DataProvider<TeamMemberType> url="TeamMember">
         <div className="container">
           <header className="header">
             <div className="top-bar"></div>

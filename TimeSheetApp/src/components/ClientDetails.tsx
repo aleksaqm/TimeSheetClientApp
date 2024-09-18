@@ -28,7 +28,7 @@ const ClientDetails = ({ item }: Props) => {
   const [postalCode, setPostalCode] = useState(item.postalCode);
 
   const deleteClient = () => {
-    deleteRequest("https://localhost:7138/api/Client", item.id)
+    deleteRequest("Client", item.id)
       .then(() => {
         fetchData();
       })
@@ -39,7 +39,7 @@ const ClientDetails = ({ item }: Props) => {
 
   const updateClient = () => {
     //env fajl
-    updateRequest("https://localhost:7138/api/Client", {
+    updateRequest("Client", {
       id: item.id,
       name: name,
       address: address,

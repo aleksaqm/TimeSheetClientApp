@@ -20,8 +20,7 @@ const TeamMemberDetails = ({ item }: Props) => {
   const [role, setRole] = useState(item.role);
 
   const updateMember = () => {
-    //env fajl
-    updateRequest("https://localhost:7138/api/TeamMember", {
+    updateRequest("TeamMember", {
       id: item.id,
       name: name,
       username: username,
@@ -39,7 +38,7 @@ const TeamMemberDetails = ({ item }: Props) => {
   };
 
   const deleteClient = () => {
-    deleteRequest("https://localhost:7138/api/TeamMember", item.id)
+    deleteRequest("TeamMember", item.id)
       .then(() => {
         fetchData();
       })

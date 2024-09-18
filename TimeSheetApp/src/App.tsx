@@ -10,6 +10,7 @@ import TeamMembersPage from "./pages/TeamMembersPage";
 import ReportsPage from "./pages/ReportsPage";
 import LoginPage from "./pages/LoginPage";
 import AuthProvider from "./auth/AuthContext";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/teamMembers" element={<TeamMembersPage />} />
           <Route path="/reports" element={<ReportsPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </AuthProvider>

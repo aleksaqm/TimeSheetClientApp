@@ -1,5 +1,6 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import apiClient from "../services/apiClient";
 
 type AuthContext = {
   authToken?: string | null;
@@ -17,20 +18,12 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
   const loginRequest = async (url: string, email: string, password: string) => {
     try {
-      const response = await fetch(url, {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const response = await apiClient.post(url, {
+        email,
+        password,
       });
 
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
-
-      const token = await response.text();
-      return token;
+      return response.data;
     } catch (error) {
       console.error("Error during login:", error);
       throw error;
@@ -39,11 +32,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
   async function handleLogin(email: string, password: string) {
     try {
-      const token = await loginRequest(
-        "https://localhost:7138/api/Account/Login",
-        email,
-        password
-      );
+      const token = await loginRequest("Account/Login", email, password);
 
       console.log("Received token:", token);
       setAuthToken(token);

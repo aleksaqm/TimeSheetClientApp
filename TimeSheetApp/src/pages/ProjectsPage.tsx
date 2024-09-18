@@ -13,7 +13,7 @@ import ProjectType from "../types/ProjectType";
 const ProjectsPage = () => {
   return (
     <>
-      <DataProvider<ProjectType> url="https://localhost:7138/api/Project">
+      <DataProvider<ProjectType> url="Project">
         <div className="container">
           <header className="header">
             <div className="top-bar"></div>

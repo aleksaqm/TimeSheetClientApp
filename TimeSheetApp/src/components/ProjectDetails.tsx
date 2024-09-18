@@ -29,14 +29,10 @@ const ProjectDetails = ({ item }: Props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const clientsData = await getAll<ClientType[]>(
-          "https://localhost:7138/api/Client"
-        );
+        const clientsData = await getAll<ClientType[]>("Client");
         setClients(clientsData);
 
-        const teamMembersData = await getAll<TeamMemberType[]>(
-          "https://localhost:7138/api/TeamMember"
-        );
+        const teamMembersData = await getAll<TeamMemberType[]>("TeamMember");
         setMembers(teamMembersData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -67,8 +63,7 @@ const ProjectDetails = ({ item }: Props) => {
   };
 
   const updateProject = () => {
-    //env fajl
-    updateRequest("https://localhost:7138/api/Project", {
+    updateRequest("Project", {
       id: item.id,
       name: name,
       description: description,
@@ -85,7 +80,7 @@ const ProjectDetails = ({ item }: Props) => {
   };
 
   const deleteProject = () => {
-    deleteRequest("https://localhost:7138/api/Project", item.id)
+    deleteRequest("Project", item.id)
       .then(() => {
         fetchData();
       })

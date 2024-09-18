@@ -8,21 +8,13 @@ interface Props {
 const ReportPrintSection = ({ getReportObject }: Props) => {
   const createPdf = async () => {
     if (getReportObject !== undefined) {
-      await generateFile(
-        "https://localhost:7138/api/Report/Pdf",
-        getReportObject,
-        "pdf"
-      );
+      await generateFile("Report/Pdf", getReportObject, "pdf");
     }
   };
 
   const exportToExcel = async () => {
     if (getReportObject !== undefined) {
-      await generateFile(
-        "https://localhost:7138/api/Report/Excel",
-        getReportObject,
-        "xlsx"
-      );
+      await generateFile("Report/Excel", getReportObject, "xlsx");
     }
   };
 

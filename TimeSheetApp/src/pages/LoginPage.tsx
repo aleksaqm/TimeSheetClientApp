@@ -1,11 +1,18 @@
 import { useState } from "react";
 import TextInput from "../components/TextInput";
 import { useAuth } from "../auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { authToken, handleLogin, handleLogout } = useAuth();
+  const navigate = useNavigate();
+
+  const goToRegister = () => {
+    navigate("/register");
+  };
+
   return (
     <>
       <div className="centered-content-wrap">
@@ -38,14 +45,14 @@ const LoginPage = () => {
                   <button onClick={handleLogout}>Logout</button>
                 ) : (
                   <button
-                    className="btn grn"
+                    className="btn orange"
                     onClick={() => handleLogin(email, password)}
                   >
                     Login
                   </button>
                 )}
-                <button onClick={() => console.log(authToken)}>
-                  printaj token
+                <button className="btn grey" onClick={goToRegister}>
+                  Register
                 </button>
               </span>
             </li>
