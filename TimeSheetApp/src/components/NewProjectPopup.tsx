@@ -22,11 +22,13 @@ const NewProjectPopup = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const clientsData = await getAll<ClientType[]>("Client");
-        setClients(clientsData);
+        const clientsPromise = getAll<ClientType[]>("Client");
+        const teamMembersPromise = getAll<TeamMemberType[]>("TeamMember");
 
-        const teamMembersData = await getAll<TeamMemberType[]>("TeamMember");
-        setMembers(teamMembersData);
+        Promise.all([clientsPromise, teamMembersPromise]).then((values) => {
+          setClients(values[0]);
+          setMembers(values[1]);
+        });
       } catch (error) {
         console.error("Error fetching data:", error);
       }

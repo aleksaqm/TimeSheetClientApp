@@ -30,14 +30,16 @@ const ActivityTable = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const clientsData = await getAll<ClientType[]>("Client");
-        setClients(clientsData);
-
-        const categoriesData = await getAll<CategoryType[]>("Category");
-        setCategories(categoriesData);
-
-        const projectsData = await getAll<ProjectType[]>("Project");
-        setProjects(projectsData);
+        const clientsPromise = getAll<ClientType[]>("Client");
+        const categoriesPromise = getAll<CategoryType[]>("Category");
+        const projectsPromise = getAll<ProjectType[]>("Project");
+        Promise.all([clientsPromise, categoriesPromise, projectsPromise]).then(
+          (values) => {
+            setClients(values[0]);
+            setCategories(values[1]);
+            setProjects(values[2]);
+          }
+        );
       } catch (error) {
         console.error("Error fetching data:", error);
       }

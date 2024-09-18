@@ -29,35 +29,40 @@ const ActivityRow = ({ activity }: Props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const clientsData = await getAll<ClientType[]>("Client");
-        setClients(clientsData);
+        const clientsPromise = getAll<ClientType[]>("Client");
 
-        const categoriesData = await getAll<CategoryType[]>("Category");
-        setCategories(categoriesData);
+        const categoriesPromise = getAll<CategoryType[]>("Category");
 
-        const projectsData = await getAll<ProjectType[]>("Project");
-        setProjects(projectsData);
+        const projectsPromise = getAll<ProjectType[]>("Project");
 
-        const selectedCategoryItem = categoriesData.find(
-          (category) => category.id === activity.categoryId
+        Promise.all([categoriesPromise, clientsPromise, projectsPromise]).then(
+          (values) => {
+            setCategories(values[0]);
+            const selectedCategoryItem = values[0].find(
+              (category) => category.id === activity.categoryId
+            );
+            if (selectedCategoryItem) {
+              setSelectedCategory(selectedCategoryItem.name);
+            }
+
+            setClients(values[1]);
+            const selectedClientItem = values[1].find(
+              (client) => client.id === activity.clientId
+            );
+            if (selectedClientItem) {
+              setSelectedClient(selectedClientItem.name);
+              console.log(selectedClientItem.name);
+            }
+
+            setProjects(values[2]);
+            const selectedProjectItem = values[2].find(
+              (project) => project.id === activity.projectId
+            );
+            if (selectedProjectItem) {
+              setSelectedProject(selectedProjectItem.name);
+            }
+          }
         );
-        if (selectedCategoryItem) {
-          setSelectedCategory(selectedCategoryItem.name);
-        }
-        const selectedClientItem = clientsData.find(
-          (client) => client.id === activity.clientId
-        );
-        if (selectedClientItem) {
-          setSelectedClient(selectedClientItem.name);
-          console.log(selectedClientItem.name);
-        }
-
-        const selectedProjectItem = projectsData.find(
-          (project) => project.id === activity.projectId
-        );
-        if (selectedProjectItem) {
-          setSelectedProject(selectedProjectItem.name);
-        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }

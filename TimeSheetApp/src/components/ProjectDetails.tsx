@@ -29,11 +29,12 @@ const ProjectDetails = ({ item }: Props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const clientsData = await getAll<ClientType[]>("Client");
-        setClients(clientsData);
-
-        const teamMembersData = await getAll<TeamMemberType[]>("TeamMember");
-        setMembers(teamMembersData);
+        const clientsPromise = getAll<ClientType[]>("Client");
+        const teamMembersPromise = getAll<TeamMemberType[]>("TeamMember");
+        Promise.all([clientsPromise, teamMembersPromise]).then((values) => {
+          setClients(values[0]);
+          setMembers(values[1]);
+        });
       } catch (error) {
         console.error("Error fetching data:", error);
       }

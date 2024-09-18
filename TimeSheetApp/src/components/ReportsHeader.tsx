@@ -84,18 +84,21 @@ const ReportsHeader = ({ setData, setParams }: Props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const clientsData = await getAll<ClientType[]>("Client");
-        setClients(clientsData);
-
-        const categoriesData = await getAll<CategoryType[]>("Category");
-        setCategories(categoriesData);
-
-        const projectsData = await getAll<ProjectType[]>("Project");
-        setProjects(projectsData);
-
-        const teamMembersData = await getAll<TeamMemberType[]>("TeamMember");
-        setMembers(teamMembersData);
-        //promise.all
+        const clientsPromise = getAll<ClientType[]>("Client");
+        const categoriesPromise = getAll<CategoryType[]>("Category");
+        const projectsPromise = getAll<ProjectType[]>("Project");
+        const teamMembersPromise = getAll<TeamMemberType[]>("TeamMember");
+        Promise.all([
+          clientsPromise,
+          categoriesPromise,
+          projectsPromise,
+          teamMembersPromise,
+        ]).then((values) => {
+          setClients(values[0]);
+          setCategories(values[1]);
+          setProjects(values[2]);
+          setMembers(values[3]);
+        });
       } catch (error) {
         console.error("Error fetching data:", error);
       }
